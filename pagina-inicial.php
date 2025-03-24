@@ -12,27 +12,20 @@
 </head>
 
 <body>
-        <button class="login-button">LOGIN</button>
+    
+    <button class="login-button">LOGIN</button>
 
     <footer>
-    <div class="footer-container">
-      <a class="link footer-left" href="index.html">n.l.tkaczyk</a>
-      <div class="footer-icons">
-        <ul>
-          <li><a href="https://www.linkedin.com/in/nltkaczyk/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a></li>
-          <li><a href="https://www.instagram.com/n.l.tkaczyk/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a></li>
-          <li><a href="https://www.youtube.com/@n.l.tkaczyk/" target="_blank"><i class="fa fa-youtube fa-2x"></i></a></li>
-      </ul>
-      </div>
-      <a class="link footer-right" href="contact.html">contact</a>
-    </div>
-
-  <div class="copyright">
-    <p style="color: #95AAB6;">
-      2023 &copy by Natalia Lidia Tkaczyk
-    </p>
-  </div>
-</footer>
+      <a href="https://exemplo1.com" target="_blank">
+        <img src="placeholder.png" alt="Imagem 1">
+      </a>
+      <a href="https://exemplo2.com" target="_blank">
+        <img src="telephone.png" alt="Imagem 2">
+      </a>
+      <a href="https://exemplo3.com" target="_blank">
+        <img src="mail.png" alt="Imagem 3">
+      </a>    
+    </footer>
 
 </body>
 
