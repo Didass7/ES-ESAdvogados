@@ -20,11 +20,11 @@
     <footer>
       <div class="footer-images">
         <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
-          <img src="placeholder.png" alt="Imagem Localização">
+          <img src="location.png" alt="Imagem Localização">
         </a>
 
         <a href="https://exemplo2.com" target="_blank">
-          <img src="telephone.png" alt="Imagem Telefone">
+          <img src="phone.png" alt="Imagem Telefone">
         </a>
 
         <a href="https://exemplo3.com" target="_blank">
