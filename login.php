@@ -12,24 +12,9 @@
 </head>
 
 <body>
-    
-    <a href="login.php">
-      <button class="login-button">LOGIN</button>
-    </a>
-    
 
     <footer>
-      <a href="https://exemplo1.com" target="_blank">
-        <img src="placeholder.png" alt="Imagem 1">
-      </a>
-      <a href="https://exemplo2.com" target="_blank">
-        <img src="telephone.png" alt="Imagem 2">
-      </a>
-      <a href="https://exemplo3.com" target="_blank">
-        <img src="mail.png" alt="Imagem 3">
-      </a>    
+    
     </footer>
 
 </body>
-
-</html>
