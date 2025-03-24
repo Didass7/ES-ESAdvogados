@@ -14,25 +14,33 @@
 
 <body>
 
-<div class="login-container">
-        <form>
-            <div class="form-group">
-                <div class= "input-icon">
-                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
+    <header>
+        <div class="header-container">
+            <a href="pagina-inicial.php">
+                <img src="logo.png" alt="Logotipo" class="logo">
+            </a>
+        </div>
+    </header>
 
+    <div class="login-container">
+            <form>
+                <div class="form-group">
+                    <div class= "input-icon">
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
+
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <i class="fa fa-lock input-icon"></i>
-                <input type="password" id="password" name="password" placeholder= "Insira a password" required>
-                            
-            </div>
-            
-            <button type="submit">Iniciar Sessão</button>
-        </form>
-</div>
+                
+                <div class="form-group">
+                    <i class="fa fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder= "Insira a password" required>
+                                
+                </div>
+                
+                <button type="submit">Iniciar Sessão</button>
+            </form>
+    </div>
 
 
 

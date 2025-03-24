@@ -4,11 +4,41 @@
 body {
     background-color: #5271ff;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+}
+
+/* Estilo do Header */
+header {
+    position: absolute; /* Para sobrepor o conteúdo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    background: transparent; /* Torna o header transparente */
+}
+
+/* Container do Header */
+.header-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* Estilo do Logotipo */
+.logo {
+    width: 50px; /* Ajusta o tamanho do logotipo */
+    height: 50px;
+    border-radius: 50%; /* Torna o logo redondo */
+    object-fit: cover;
 }
 
 .login-button {
@@ -24,12 +54,13 @@ body {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    max-width: 100vw; /* Impede que o footer ultrapasse a largura da tela */
     text-align: center;
     background-color: white;
-    padding: 5x 0;
+    box-sizing: border-box;
 }
 
 .footer-images {
@@ -37,6 +68,7 @@ footer {
     justify-content: center;
     gap: 15px; /* Espaçamento entre as imagens */
     padding: 10px 0;
+    max-width: 100%; /* Evita overflow */
 }
 
 .footer-images img {

@@ -12,6 +12,14 @@
 </head>
 
 <body>
+
+    <header>
+        <div class="header-container">
+            <a href="pagina-inicial.php">
+                <img src="logo.png" alt="Logotipo" class="logo">
+            </a>
+        </div>
+    </header>
     
     <a href="login.php">
       <button class="login-button">LOGIN</button>
