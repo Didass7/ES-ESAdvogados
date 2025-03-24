@@ -12,7 +12,6 @@
 </head>
 
 <body>
-    
     <button class="login-button">LOGIN</button>
 
     <footer>
