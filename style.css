@@ -16,8 +16,8 @@ body {
     color: #5271ff; /* Cor do texto preta */
     border: none; /* Remove bordas */
     border-radius: 50px; /* Torna o botão redondo */
-    padding: 10px 20px; /* Espaçamento interno */
-    font-size: 20px; /* Tamanho da fonte */
+    padding: 10px 55px; /* Reduz a altura e aumenta a largura */
+    font-size: 46px; /* Mantém o tamanho da fonte */
     cursor: pointer; /* Mostra o cursor de clique */
     transition: all 0.3s ease; /* Transição suave para hover */
     font-weight: bold;
