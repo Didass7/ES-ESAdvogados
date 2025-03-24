@@ -60,7 +60,7 @@
           <img src="mail.png" alt="Imagem Mail">
         </a>  
       </div>  
-      <p class="copyright">© 2024 Todos os direitos reservados.</p>
+      <p class="copyright">© 2025 Todos os direitos reservados.</p>
     </footer>
 
 </body>
