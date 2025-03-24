@@ -12,15 +12,10 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-    <button class="login-button">LOGIN</button>
-=======
     
     <a href="login.php">
       <button class="login-button">LOGIN</button>
     </a>
-    
->>>>>>> 51a532f18565440ad62f88ae0b5c7111ff9aa07c
 
     <footer>
       <div class="footer-images">
