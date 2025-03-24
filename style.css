@@ -29,4 +29,19 @@ footer {
     width: 100%;
     text-align: center;
     background-color: white;
-    padding: 10px 0;}
+    padding: 10px 0;
+}
+
+.footer-images {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espaçamento entre as imagens */
+    padding: 20px 0;
+}
+
+.footer-images img {
+    width: 80px; /* Aumenta o tamanho */
+    height: 80px; /* Mantém a proporção */
+    filter: invert(34%) sepia(81%) saturate(683%) hue-rotate(195deg); /* Cor azul #5271ff */
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
