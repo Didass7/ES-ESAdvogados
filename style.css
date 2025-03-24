@@ -35,8 +35,8 @@ header {
 
 /* Estilo do Logotipo */
 .logo {
-    width: 50px; /* Ajusta o tamanho do logotipo */
-    height: 50px;
+    width: 60px; /* Ajusta o tamanho do logotipo */
+    height: 60px;
     border-radius: 50%; /* Torna o logo redondo */
     object-fit: cover;
 }
