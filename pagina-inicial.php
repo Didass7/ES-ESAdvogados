@@ -12,9 +12,7 @@
 </head>
 
 <body>
-    <div class="container">
         <button class="login-button">LOGIN</button>
-    </div>
 
     <footer>
     <div class="footer-container">
