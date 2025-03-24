@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
 
 body {
     background-color: #5271ff;
@@ -16,3 +10,58 @@ body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
 }
+
+.login-button {
+    background-color: white; /* Cor de fundo branca */
+    color: black; /* Cor do texto preta */
+    border: none; /* Remove bordas */
+    border-radius: 50px; /* Torna o botão redondo */
+    padding: 10px 20px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Mostra o cursor de clique */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve */
+    transition: all 0.3s ease; /* Transição suave para hover */
+}
+
+.login-button:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra mais intensa no hover */
+}
+
+footer {
+    text-align: center;}
+    
+    .footer-container {
+    background-color: #95AAB6;
+    display: flex;}
+    
+    .footer-container a {
+    color: #F5F6F7;
+    padding: 42px 16px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: medium;}
+    
+    .footer-left {
+    margin-right: auto}
+    
+    .fa:hover {
+    color: #45405F;}
+    
+    .footer-icons {
+    justify-content: space-between;
+    padding: 16px 64px 0px 0px}
+    
+    .footer-icons ul {
+    list-style-type: none;}
+    
+    .footer-icons li {
+    display: inline-block;}
+    
+    .footer-right {
+    margin-left: auto}
+    
+    .copyright 
+    {background-color: #F5F6F7;
+    overflow: hidden;}
