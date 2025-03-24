@@ -23,11 +23,11 @@
           <img src="location.png" alt="Imagem Localização">
         </a>
 
-        <a href="https://exemplo2.com" target="_blank">
+        <a href="https://moodle2425.ipcb.pt/" target="_blank">
           <img src="phone.png" alt="Imagem Telefone">
         </a>
 
-        <a href="https://exemplo3.com" target="_blank">
+        <a href="https://moodle2425.ipcb.pt/" target="_blank">
           <img src="mail.png" alt="Imagem Mail">
         </a>  
       </div>  

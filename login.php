@@ -32,22 +32,26 @@
             
             <button type="submit">Iniciar Sessão</button>
         </form>
-    </div>
+</div>
 
 
 
 
 
-<footer>
-      <a href="https://exemplo1.com" target="_blank">
-        <img src="placeholder.png" alt="Imagem 1">
-      </a>
-      <a href="https://exemplo2.com" target="_blank">
-        <img src="telephone.png" alt="Imagem 2">
-      </a>
-      <a href="https://exemplo3.com" target="_blank">
-        <img src="mail.png" alt="Imagem 3">
-      </a>    
+    <footer>
+      <div class="footer-images">
+        <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
+          <img src="location.png" alt="Imagem Localização">
+        </a>
+
+        <a href="https://moodle2425.ipcb.pt/" target="_blank">
+          <img src="phone.png" alt="Imagem Telefone">
+        </a>
+
+        <a href="https://moodle2425.ipcb.pt/" target="_blank">
+          <img src="mail.png" alt="Imagem Mail">
+        </a>  
+      </div>  
     </footer>
 
 </body>
