@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Menu Administrador</title>
+    <link rel="stylesheet" href="menu_admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
@@ -19,11 +19,35 @@
                 <img src="logo.png" alt="Logotipo" class="logo">
             </a>
         </div>
+        <div class="header-container2">
+            <a href="muda_password.php">
+              <button class="menu-button">MUDAR PASSWORD</button>
+            </a>
+
+            <a href="edita_perfil.php">
+              <button class="menu-button">EDITAR PERFIL</button>
+            </a>
+
+            <a href="login.php">
+              <button class="menu-button">LOGOUT</button>
+            </a>
+
+            <button class="menu-button">
+              ADMINISTRADOR
+              <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
+            </button>
+        </div>
     </header>
-    
-    <a href="login.php">
-      <button class="login-button">LOGIN</button>
-    </a>
+
+    <div class="main-content">
+      <a href="cria_utilizador.php">
+        <button class="menu-button2">CRIAR UTILIZADORES</button>
+      </a>
+
+      <a href="consulta_colaborador.php">
+        <button class="menu-button2">CONSULTAR COLABORADORES</button>
+      </a>
+    </div>
 
     <footer>
       <div class="footer-images">
