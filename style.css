@@ -19,14 +19,8 @@ body {
     padding: 10px 55px; /* Reduz a altura e aumenta a largura */
     font-size: 46px; /* Mantém o tamanho da fonte */
     cursor: pointer; /* Mostra o cursor de clique */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve */
     transition: all 0.3s ease; /* Transição suave para hover */
     font-weight: bold;
-}
-
-.login-button:hover {
-    background-color: white; /* Cor de fundo ao passar o mouse */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Sombra mais intensa no hover */
 }
 
 footer {
@@ -36,38 +30,3 @@ footer {
     text-align: center;
     background-color: white;
     padding: 10px 0;}
-    
-.footer-container {
-    background-color: white;
-    display: flex;}
-    
-.footer-container a {
-    color: #5271ff;
-    padding: 42px 16px;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: medium;}
-    
-.footer-left {
-    margin-right: auto}
-    
-.fa:hover {
-    color: white;}
-    
-.footer-icons {
-    justify-content: space-between;
-    padding: 16px 64px 0px 0px}
-    
-.footer-icons ul {
-    list-style-type: none;}
-    
-.footer-icons li {
-    display: inline-block;}
-    
-.footer-right {
-    margin-left: auto}
-    
-.copyright {
-    background-color: white;
-    overflow: hidden;}
