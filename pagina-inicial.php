@@ -38,7 +38,8 @@
         <a href="https://moodle2425.ipcb.pt/" target="_blank">
           <img src="mail.png" alt="Imagem Mail">
         </a>  
-      </div>  
+      </div> 
+      <p class="copyright">© 2024 Todos os direitos reservados.</p> 
     </footer>
 
 </body>
