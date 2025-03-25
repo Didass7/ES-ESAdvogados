@@ -61,7 +61,6 @@ header {
     cursor: pointer;
     font-weight: bold;
     white-space: nowrap; /* Impede que o texto quebre */
-    min-width: 250px;
 }
 
 footer {
