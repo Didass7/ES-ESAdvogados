@@ -23,29 +23,60 @@
     </header>
 
     <div class="login-container">
-            <form>
-                <div class="form-group">
-                    <div class= "input-icon">
-                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                    <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
+      <form action="login.php" method="POST">
+        <div class="form-group">
+          <div class="input-icon">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
+          </div>
+        </div>
 
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <i class="fa fa-lock input-icon"></i>
-                    <input type="password" id="password" name="password" placeholder= "Insira a password" required>
-                                
-                </div>
-                
-                <button type="submit">Iniciar Sessão</button>
-            </form>
+        <div class="form-group">
+          <i class="fa fa-lock input-icon"></i>
+          <input type="password" id="password" name="password" placeholder="Insira a password" required>
+        </div>
+
+        <button type="submit">Iniciar Sessão</button>
+      </form>
     </div>
 
+    <?php
+      session_start();
+      $conn = new mysqli("localhost", "root", "", "teu_banco");
 
+      // Verifica conexão
+      if ($conn->connect_error) {
+          die("Erro de conexão: " . $conn->connect_error);
+      }
 
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+          $username = $_POST['username'];
+          $password = $_POST['password'];
 
+          // Evita SQL Injection manualmente
+          $username = str_replace(["'", '"', ";", "--"], "", $username);
+          $password = str_replace(["'", '"', ";", "--"], "", $password);
 
+          $sql = "SELECT * FROM utilizador WHERE username = '$username'";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+
+              // Valida a password manualmente (já que não podes usar password_hash)
+              if ($password === $row['password']) {
+                  $_SESSION['user'] = $username;
+                  header("Location: pagina-inicial.php");
+              } else {
+                  echo "Credenciais inválidas.";
+              }
+          } else {
+              echo "Utilizador não encontrado.";
+          }
+      }
+
+      $conn->close();
+    ?>
     <footer>
       <div class="footer-images">
         <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
