@@ -68,7 +68,6 @@ header {
     padding: 10px 15px;
     font-size: 1.25rem; /* Usar unidades relativas (melhor para responsividade) */
     cursor: pointer;
-    transition: all 0.3s ease;
     font-weight: bold;
     white-space: nowrap; /* Impede que o texto quebre */
 }
@@ -81,11 +80,9 @@ header {
     padding: 10px 30px;
     font-size: 2.5rem; /* Usar unidades relativas (melhor para responsividade) */
     cursor: pointer;
-    transition: all 0.3s ease;
     font-weight: bold;
     white-space: nowrap; /* Impede que o texto quebre */
 }
-
 
 /* Conteúdo principal - adicionei uma classe para o conteúdo central */
 .main-content {
@@ -119,11 +116,6 @@ footer {
 .footer-images img {
     width: 40px;
     height: 40px;
-    transition: transform 0.3s ease; /* Efeito hover suave */
-}
-
-.footer-images img:hover {
-    transform: scale(1.1);
 }
 
 .copyright {

@@ -43,6 +43,15 @@ header {
     padding: 0 20px;
 }
 
+.header-container2 {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 100%;
+    padding: 0px;
+    gap: 7.5px;
+}
+
 /* Estilo do Logotipo */
 .logo {
     width: 60px;
@@ -51,17 +60,51 @@ header {
     object-fit: cover;
 }
 
-.login-button {
+.menu-button {
     background-color: white;
     color: #5271ff;
     border: none;
     border-radius: 50px;
-    padding: 10px 55px;
-    font-size: 4rem; /* Usar unidades relativas (melhor para responsividade) */
+    padding: 10px 15px;
+    font-size: 1.25rem; /* Usar unidades relativas (melhor para responsividade) */
     cursor: pointer;
     font-weight: bold;
     white-space: nowrap; /* Impede que o texto quebre */
-    min-width: 250px;
+}
+
+.menu-button2 {
+    background-color: white;
+    color: #5271ff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-size: 2.5rem; /* Usar unidades relativas (melhor para responsividade) */
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap; /* Impede que o texto quebre */
+}
+
+/* Conteúdo principal - adicionei uma classe para o conteúdo central */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    padding: 80px 20px; /* Evitar que o conteúdo fique sob header/footer */
+    gap: 15px;
+}
+
+.main-content2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Empurra para baixo */
+    align-items: flex-end; /* Alinha à direita */
+    flex-grow: 1;
+    width: 100%;
+    padding: 100px 20px; /* Evitar que o conteúdo fique sob header/footer */
+    gap: 15px;
 }
 
 footer {
