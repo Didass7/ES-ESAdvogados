@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             $_SESSION['user'] = $username;
            // Redireciona com base no tipo de utilizador
-           if (isset($row['id_tipo']) && $row['id_tipo'] === '1') {
+           if (isset($row['id_tipo']) && intval($row['id_tipo']) === 1) {
             header("Location: menu_admin.php");
             exit;
           } else {
