@@ -26,11 +26,11 @@
             </a>
         </div>
         <div class="header-container2">
-            <a href="muda_password.php">
+            <a href="muda_password_colaborador.php">
               <button class="menu-button">MUDAR PASSWORD</button>
             </a>
 
-            <a href="edita_perfil.php">
+            <a href="edita_perfil_admin.php">
               <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
