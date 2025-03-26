@@ -1,18 +1,18 @@
 <?php
 
-include 'basedados.h';
-
 session_start();
 
+include 'basedados.h';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['nome_utilizador'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
     // Evita SQL Injection manualmente
     $username = str_replace(["'", '"', ";", "--"], "", $username);
     $password = str_replace(["'", '"', ";", "--"], "", $password);
 
-    $sql = "SELECT * FROM utilizador WHERE nome_utilizador = '$username'";
+    $sql = "SELECT * FROM utilizador WHERE nomeutilizador = '$username'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -21,13 +21,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Valida a password manualmente
         if ($password === $row['password']) {
             $_SESSION['user'] = $username;
-            header("Location: pagina-inicial.php");
+           // Redireciona com base no tipo de utilizador
+           if (isset($row['id_tipo']) && intval($row['id_tipo']) === 1) {
+            header("Location: menu_admin.php");
+            exit;
+          } else {
+            header("Location: menu_colaborador.php");
+            exit;
+            }
         } else {
-            echo "Credenciais inválidas.";
-        }
+          // Credenciais inválidas: redireciona para a página de login
+          header("Location: login.php?error=invalid_credentials");
+          exit;
+          }
     } else {
-        echo "Utilizador não encontrado.";
-    }
+      // Utilizador não encontrado: redireciona para a página de login
+      header("Location: login.php?error=user_not_found");
+      exit;
+  }
 }
 
 mysqli_close($conn);
