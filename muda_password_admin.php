@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         // Verifica se a senha atual está correta
-        $sql = "SELECT password, id_tipo FROM utilizador WHERE id = '$user_id'";
+        $sql = "SELECT password, id_utilizador FROM utilizador WHERE id_utilizador = '$user_id'";
         $result = mysqli_query($conn, $sql);
         
         if ($result && mysqli_num_rows($result) > 0) {
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verifica se a senha atual inserida corresponde à senha armazenada
             if ($current_password === $stored_password) {
                 // Atualiza a senha no banco de dados
-                $sql = "SELECT password, id_utilizador FROM utilizador WHERE id_utilizador = '$user_id'";
+                $sql_update = "UPDATE utilizador SET password = '$new_password' WHERE id_ utilizador = '$user_id'";
                 
               if (mysqli_query($conn, $sql_update)) {
                   // Se a senha for alterada com sucesso, redireciona para o menu do colaborador
