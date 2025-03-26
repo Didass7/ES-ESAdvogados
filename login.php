@@ -73,7 +73,7 @@ mysqli_close($conn);
             <div class="email">
                 <div class="input-container">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <input type="text" id="nomeutilizador" name="nomeutilizador" placeholder="Insira o nome de utilizador" required>
+                    <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
                 </div>
             </div>
 
