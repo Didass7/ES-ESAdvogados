@@ -26,7 +26,7 @@
             </a>
         </div>
         <div class="header-container2">
-            <a href="muda_password_colaborador.php">
+            <a href="muda_password_admin.php">
               <button class="menu-button">MUDAR PASSWORD</button>
             </a>
 
