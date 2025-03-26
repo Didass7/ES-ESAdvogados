@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = str_replace(["'", '"', ";", "--"], "", $username);
     $password = str_replace(["'", '"', ";", "--"], "", $password);
 
-    $sql = "SELECT * FROM utilizador WHERE nome_utilizador = '$username'";
+    $sql = "SELECT * FROM utilizador WHERE nomeutilizador = '$username'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             $_SESSION['user'] = $username;
            // Redireciona com base no tipo de utilizador
-           if (isset($row['tipo_utilizador']) && $row['tipo_utilizador'] === 'Administrador') {
+           if (isset($row['id_tipo']) && $row['id_tipo'] === '1') {
             header("Location: menu_admin.php");
             exit;
           } else {
