@@ -1,11 +1,11 @@
 <?php
 
-include 'basedados.h';
-
 session_start();
 
+include 'basedados.h';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['nome_utilizador'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
     // Evita SQL Injection manualmente
@@ -19,15 +19,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
 
         // Valida a password manualmente
-        if ($password === $row['password']) {
+        if (password_verify($password, $row['password'])) {
             $_SESSION['user'] = $username;
-            header("Location: pagina-inicial.php");
+           // Redireciona com base no tipo de utilizador
+           if (isset($row['tipo_utilizador']) && $row['tipo_utilizador'] === 'Administrador') {
+            header("Location: menu_admin.php");
+            exit;
+          } else {
+            header("Location: menu_colaborador.php");
+            exit;
+            }
         } else {
-            echo "Credenciais inválidas.";
-        }
+          // Credenciais inválidas: redireciona para a página de login
+          header("Location: login.php?error=invalid_credentials");
+          exit;
+          }
     } else {
-        echo "Utilizador não encontrado.";
-    }
+      // Utilizador não encontrado: redireciona para a página de login
+      header("Location: login.php?error=user_not_found");
+      exit;
+  }
 }
 
 mysqli_close($conn);

@@ -1,7 +1,40 @@
 <?php
     
     include 'basedados.h';
-    
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $username = $_POST['nome_utilizador'];
+      $email = $_POST['mail'];
+      
+      // Sanitiza os dados
+      $username = str_replace(["'", '"', ";", "--"], "", $username);
+      $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+      
+      // Insere o novo utilizador com a senha vazia e tipo "colaborador"
+      $sql = "INSERT INTO utilizador (nome_utilizador, mail, password, id_tipo) 
+              VALUES ('$username', '$email', '', 'Colaborador')";
+      
+      if (mysqli_query($conn, $sql)) {
+          // Cria o link para definir a senha (ajuste a URL conforme o seu domínio)
+          $setPasswordLink = "http://seudominio.com/set_password.php?user=" . urlencode($username) .
+                             "&email=" . urlencode($email) .
+                             "&ts=" . $ts .
+                             "&hash=" . $hash;
+          $subject = "Defina sua senha";
+          $message = "Olá, $username,\n\nPor favor, defina sua senha clicando no link abaixo (válido por 1 hora):\n$setPasswordLink";
+          $headers = "From: no-reply@seudominio.com";
+          
+          if (mail($email, $subject, $message, $headers)) {
+              echo "Um e-mail foi enviado para $email com as instruções para definir sua senha.";
+          } else {
+              echo "Erro ao enviar o e-mail.";
+          }
+      } else {
+          echo "Erro ao criar o utilizador: " . mysqli_error($conn);
+      }
+  }
+  
+  mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
