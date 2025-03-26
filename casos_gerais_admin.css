@@ -28,6 +28,15 @@ header {
     background: transparent;
 }
 
+/* Container do Header - pode não ser necessário se o header já é flex */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
 .header-container2 {
     display: flex;
     gap: 15px;
