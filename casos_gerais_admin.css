@@ -15,7 +15,7 @@ body {
     position: relative;
 }
 
-/* HEADER */
+/* HEADER FIXO */
 header {
     position: fixed;
     top: 0;
@@ -25,6 +25,7 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    background: transparent;
 }
 
 .header-container2 {
@@ -45,6 +46,11 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
+    transition: transform 0.2s;
+}
+
+.menu-button:hover {
+    transform: translateY(-2px);
 }
 
 /* FORMULÁRIO CENTRAL */
@@ -66,15 +72,15 @@ header {
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .form-label {
     display: block;
     color: #5271ff;
     font-weight: bold;
-    margin-bottom: 10px;
-    font-size: 1.1rem;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
 }
 
 .form-input {
@@ -90,18 +96,19 @@ header {
 .form-input::placeholder {
     color: #5271ff;
     opacity: 0.7;
+    font-weight: normal;
 }
 
 .submit-btn {
     background: #5271ff;
     color: white;
     width: 100%;
-    padding: 15px;
+    padding: 18px;
     border: none;
     border-radius: 50px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 30px;
     cursor: pointer;
     transition: background 0.3s;
 }
@@ -125,17 +132,39 @@ footer {
     gap: 25px;
 }
 
+.footer-images img {
+    width: 45px;
+    height: 45px;
+    transition: transform 0.3s;
+}
+
+.footer-images img:hover {
+    transform: scale(1.1);
+}
+
+.copyright {
+    color: #5271ff;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
     .profile-card {
         padding: 30px;
         margin: 20px;
     }
-    
+
+    .form-label {
+        font-size: 1.1rem;
+    }
+
     .form-input {
         font-size: 1rem;
     }
-    
+
     .menu-button {
         padding: 10px 20px;
         font-size: 1rem;
