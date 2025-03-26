@@ -1,41 +1,51 @@
 <?php
-    
-    include 'basedados.h';
+include 'basedados.h';
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $username = $_POST['nome_utilizador'];
-      $email = $_POST['mail'];
-      
-      // Sanitiza os dados
-      $username = str_replace(["'", '"', ";", "--"], "", $username);
-      $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-      
-      // Insere o novo utilizador com a senha vazia e tipo "colaborador"
-      $sql = "INSERT INTO utilizador (nome_utilizador, mail, password, id_tipo) 
-              VALUES ('$username', '$email', '', 'Colaborador')";
-      
-      if (mysqli_query($conn, $sql)) {
-          // Cria o link para definir a senha (ajuste a URL conforme o seu domínio)
-          $setPasswordLink = "http://seudominio.com/set_password.php?user=" . urlencode($username) .
-                             "&email=" . urlencode($email) .
-                             "&ts=" . $ts .
-                             "&hash=" . $hash;
-          $subject = "Defina sua senha";
-          $message = "Olá, $username,\n\nPor favor, defina sua senha clicando no link abaixo (válido por 1 hora):\n$setPasswordLink";
-          $headers = "From: no-reply@seudominio.com";
-          
-          if (mail($email, $subject, $message, $headers)) {
-              echo "Um e-mail foi enviado para $email com as instruções para definir sua senha.";
-          } else {
-              echo "Erro ao enviar o e-mail.";
-          }
-      } else {
-          echo "Erro ao criar o utilizador: " . mysqli_error($conn);
-      }
-  }
-  
-  mysqli_close($conn);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $email = $_POST['mail'];
+    $password = $_POST['password'];
+
+    // Sanitiza os dados
+    $username = str_replace(["'", '"', ";", "--"], "", $username);
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    $password = str_replace(["'", '"', ";", "--"], "", $password);
+
+    // Verifica se o e-mail é válido
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // Redireciona de volta para a página de registo com uma mensagem de erro
+        header("Location: cria_utilizador.php?error=invalid_email");
+        exit();
+    }
+
+    // Verifica se o utilizador já existe
+    $checkUser = "SELECT * FROM utilizador WHERE mail = '$email' OR nomeutilizador = '$username'";
+    $result = mysqli_query($conn, $checkUser);
+
+    if (mysqli_num_rows($result) > 0) {
+        // Redireciona de volta para a página de registo com uma mensagem de erro
+        header("Location: cria_utilizador.php?error=user_exists");
+        exit();
+    }
+
+    // Insere o novo utilizador com o id_tipo predefinido (2 = Colaborador)
+    $sql = "INSERT INTO utilizador (nomeutilizador, mail, password, id_tipo) 
+            VALUES ('$username', '$email', '$password', 2)";
+
+    if (mysqli_query($conn, $sql)) {
+        // Redireciona para o menu do administrador após sucesso
+        header("Location: menu_admin.php");
+        exit();
+    } else {
+        // Redireciona de volta para a página de registo com uma mensagem de erro
+        header("Location: cria_utilizador.php?error=db_error");
+        exit();
+    }
+}
+
+mysqli_close($conn);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -73,6 +83,29 @@
             </a>
         </div>
     </header>
+
+    <div class="login-container">
+      <form action="cria_utilizador.php" method="POST">
+          <div class="form-group">
+              <div class="input-icon">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
+              </div>
+          </div>
+
+          <div class="form-group">
+              <i class="fa fa-envelope input-icon"></i>
+              <input type="email" id="mail" name="mail" placeholder="Insira o e-mail" required>
+          </div>
+
+          <div class="form-group">
+              <i class="fa fa-lock input-icon"></i>
+              <input type="password" id="password" name="password" placeholder="Insira a password" required>
+          </div>
+
+          <button type="submit">Registar</button>
+      </form>
+    </div>
 
     <footer>
       <div class="footer-images">
