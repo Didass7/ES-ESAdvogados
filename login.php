@@ -1,3 +1,38 @@
+<?php
+
+include 'basedados.h';
+
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['nome_utilizador'];
+    $password = $_POST['password'];
+
+    // Evita SQL Injection manualmente
+    $username = str_replace(["'", '"', ";", "--"], "", $username);
+    $password = str_replace(["'", '"', ";", "--"], "", $password);
+
+    $sql = "SELECT * FROM utilizador WHERE nome_utilizador = '$username'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        // Valida a password manualmente
+        if ($password === $row['password']) {
+            $_SESSION['user'] = $username;
+            header("Location: pagina-inicial.php");
+        } else {
+            echo "Credenciais inválidas.";
+        }
+    } else {
+        echo "Utilizador não encontrado.";
+    }
+}
+
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,43 +75,6 @@
       </form>
     </div>
 
-    <?php
-      session_start();
-      $conn = new mysqli("localhost", "root", "", "teu_banco");
-
-      // Verifica conexão
-      if ($conn->connect_error) {
-          die("Erro de conexão: " . $conn->connect_error);
-      }
-
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          $username = $_POST['username'];
-          $password = $_POST['password'];
-
-          // Evita SQL Injection manualmente
-          $username = str_replace(["'", '"', ";", "--"], "", $username);
-          $password = str_replace(["'", '"', ";", "--"], "", $password);
-
-          $sql = "SELECT * FROM utilizador WHERE username = '$username'";
-          $result = $conn->query($sql);
-
-          if ($result->num_rows > 0) {
-              $row = $result->fetch_assoc();
-
-              // Valida a password manualmente
-              if ($password === $row['password']) {
-                  $_SESSION['user'] = $username;
-                  header("Location: pagina-inicial.php");
-              } else {
-                  echo "Credenciais inválidas.";
-              }
-          } else {
-              echo "Utilizador não encontrado.";
-          }
-      }
-
-      $conn->close();
-    ?>
     <footer>
       <div class="footer-images">
         <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
