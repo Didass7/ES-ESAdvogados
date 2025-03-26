@@ -1,5 +1,5 @@
 <?php
-    
+
     include 'basedados.h';
     
 ?>
@@ -26,11 +26,11 @@
             </a>
         </div>
         <div class="header-container2">
-            <a href="muda_password.php">
+            <a href="muda_password_admin.php">
               <button class="menu-button">MUDAR PASSWORD</button>
             </a>
 
-            <a href="edita_perfil.php">
+            <a href="edita_perfil_admin.php">
               <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
@@ -65,7 +65,7 @@
           <img src="phone.png" alt="Imagem Telefone">
         </a>
 
-        <a href="https://moodle2425.ipcb.pt/" target="_blank">
+        <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" target="_blank">
           <img src="mail.png" alt="Imagem Mail">
         </a>  
       </div> 

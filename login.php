@@ -73,7 +73,7 @@ mysqli_close($conn);
             <div class="email">
                 <div class="input-container">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <input type="text" id="nome_utilizador" name="nome_utilizador" placeholder="Insira o nome de utilizador" required>
+                    <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
                 </div>
             </div>
 
@@ -99,7 +99,7 @@ mysqli_close($conn);
           <img src="phone.png" alt="Imagem Telefone">
         </a>
 
-        <a href="https://moodle2425.ipcb.pt/" target="_blank">
+        <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" target="_blank">
           <img src="mail.png" alt="Imagem Mail">
         </a>  
       </div>  
