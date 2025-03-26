@@ -5,7 +5,7 @@ session_start();
 include 'basedados.h';
 
 // ID do utilizador logado
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['id_utilizador'];
 
 // Processa o formulário de mudança de password
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result && mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             $stored_password = $row['password'];
-            $user_type = $row['id_tipo']; // Obtém o tipo de utilizador (1 = Admin, 2 = Colaborador)
             
             // Verifica se a senha atual inserida corresponde à senha armazenada
             if ($current_password === $stored_password) {
