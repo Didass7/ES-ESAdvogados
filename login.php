@@ -40,7 +40,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -58,22 +58,25 @@ mysqli_close($conn);
     </header>
 
     <div class="login-container">
-      <form action="login.php" method="POST">
-        <div class="form-group">
-          <div class="input-icon">
-              <i class="fa fa-envelope-o" aria-hidden="true"></i>
-              <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
-          </div>
-        </div>
+        <form action="login.php" method="POST">
+            <div class="email">
+                <div class="input-container">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <input type="text" id="nome_utilizador" name="nome_utilizador" placeholder="Insira o nome de utilizador" required>
+                </div>
+            </div>
 
-        <div class="form-group">
-          <i class="fa fa-lock input-icon"></i>
-          <input type="password" id="password" name="password" placeholder="Insira a password" required>
-        </div>
+            <div class="password">
+                <div class="input-container">
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <input type="password" id="password" name="password" placeholder="Insira a password" required>
+                </div>
+            </div>
 
-        <button type="submit">Iniciar Sessão</button>
-      </form>
+            <button type="submit">Iniciar Sessão</button>
+        </form>
     </div>
+
 
     <footer>
       <div class="footer-images">
