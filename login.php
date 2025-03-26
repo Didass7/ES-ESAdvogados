@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
 
         // Valida a password manualmente
-        if (password_verify($password, $row['password'])) {
+        if ($password === $row['password']) {
             $_SESSION['user'] = $username;
            // Redireciona com base no tipo de utilizador
            if (isset($row['id_tipo']) && intval($row['id_tipo']) === 1) {
