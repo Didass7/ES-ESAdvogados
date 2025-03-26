@@ -1,11 +1,17 @@
+<?php
+    
+    include 'basedados.h';
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil</title>
-    <link rel="stylesheet" href="casos_gerais_admin.css">
+    <title>Menu Colaborador</title>
+    <link rel="stylesheet" href="menu_colaborador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
@@ -20,8 +26,12 @@
             </a>
         </div>
         <div class="header-container2">
-            <a href="muda_password_admin.php">
+            <a href="muda_password.php">
               <button class="menu-button">MUDAR PASSWORD</button>
+            </a>
+
+            <a href="edita_perfil.php">
+              <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
             <a href="login.php">
@@ -29,19 +39,23 @@
             </a>
 
             <button class="menu-button">
-              ADMINISTRADOR
+              COLABORADOR
               <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
         </div>
     </header>
 
     <div class="main-content">
-      
-    </div>
+      <a href="cria_cliente.php">
+        <button class="menu-button2">CRIAR CLIENTE</button>
+      </a>
 
-    <div class = "main-content2">
-      <a href="menu_admin.php">
-        <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
+      <a href="regista_agenda.php">
+        <button class="menu-button2">REGISTAR AGENDA</button>
+      </a>
+
+      <a href="casos_juridicos.php">
+        <button class="menu-button2">CASOS JURÍDICOS</button>
       </a>
     </div>
 
@@ -61,7 +75,6 @@
       </div> 
       <p class="copyright">© 2025 Todos os direitos reservados.</p> 
     </footer>
-
 </body>
 
 </html>

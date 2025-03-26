@@ -1,3 +1,49 @@
+<?php
+
+session_start();
+
+include 'basedados.h';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Evita SQL Injection manualmente
+    $username = str_replace(["'", '"', ";", "--"], "", $username);
+    $password = str_replace(["'", '"', ";", "--"], "", $password);
+
+    $sql = "SELECT * FROM utilizador WHERE nome_utilizador = '$username'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        // Valida a password manualmente
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['user'] = $username;
+           // Redireciona com base no tipo de utilizador
+           if (isset($row['tipo_utilizador']) && $row['tipo_utilizador'] === 'Administrador') {
+            header("Location: menu_admin.php");
+            exit;
+          } else {
+            header("Location: menu_colaborador.php");
+            exit;
+            }
+        } else {
+          // Credenciais inválidas: redireciona para a página de login
+          header("Location: login.php?error=invalid_credentials");
+          exit;
+          }
+    } else {
+      // Utilizador não encontrado: redireciona para a página de login
+      header("Location: login.php?error=user_not_found");
+      exit;
+  }
+}
+
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,43 +86,6 @@
       </form>
     </div>
 
-    <?php
-      session_start();
-      $conn = new mysqli("localhost", "root", "", "teu_banco");
-
-      // Verifica conexão
-      if ($conn->connect_error) {
-          die("Erro de conexão: " . $conn->connect_error);
-      }
-
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-          $username = $_POST['username'];
-          $password = $_POST['password'];
-
-          // Evita SQL Injection manualmente
-          $username = str_replace(["'", '"', ";", "--"], "", $username);
-          $password = str_replace(["'", '"', ";", "--"], "", $password);
-
-          $sql = "SELECT * FROM utilizador WHERE username = '$username'";
-          $result = $conn->query($sql);
-
-          if ($result->num_rows > 0) {
-              $row = $result->fetch_assoc();
-
-              // Valida a password manualmente (já que não podes usar password_hash)
-              if ($password === $row['password']) {
-                  $_SESSION['user'] = $username;
-                  header("Location: pagina-inicial.php");
-              } else {
-                  echo "Credenciais inválidas.";
-              }
-          } else {
-              echo "Utilizador não encontrado.";
-          }
-      }
-
-      $conn->close();
-    ?>
     <footer>
       <div class="footer-images">
         <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">

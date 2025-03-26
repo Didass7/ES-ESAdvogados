@@ -1,10 +1,16 @@
+<?php
+    
+    include 'basedados.h';
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil</title>
+    <title>Mudar Password</title>
     <link rel="stylesheet" href="casos_gerais_colaborador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -21,8 +27,8 @@
         </div>
         <div class="header-container2">
 
-            <a href="muda_password_colaborador.php">
-              <button class="menu-button">MUDAR PASSWORD</button>
+            <a href="edita_perfil_colaborador.php">
+              <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
             <a href="login.php">
