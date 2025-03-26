@@ -4,13 +4,6 @@ session_start();
 
 include 'basedados.h';
 
-// Verifica se o utilizador está logado
-if (!isset($_SESSION['user_id'])) {
-    // Se o utilizador não estiver logado, redireciona para o login
-    header("Location: login.php");
-    exit();
-}
-
 // ID do utilizador logado
 $user_id = $_SESSION['user_id'];
 
