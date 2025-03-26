@@ -147,7 +147,7 @@ mysqli_close($conn);
           <img src="phone.png" alt="Imagem Telefone">
         </a>
 
-        <a href="https://moodle2425.ipcb.pt/" target="_blank">
+        <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" target="_blank">
           <img src="mail.png" alt="Imagem Mail">
         </a>  
       </div> 
