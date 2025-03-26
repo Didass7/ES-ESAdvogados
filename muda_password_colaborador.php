@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         // Verifica se a senha atual está correta
-        $sql = "SELECT password, id_tipo FROM utilizador WHERE id = '$user_id'";
+        $sql = "SELECT password, id_utilizador FROM utilizador WHERE id_utilizador = '$user_id'";
         $result = mysqli_query($conn, $sql);
         
         if ($result && mysqli_num_rows($result) > 0) {
