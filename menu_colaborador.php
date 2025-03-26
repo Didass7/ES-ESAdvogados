@@ -30,7 +30,7 @@
               <button class="menu-button">MUDAR PASSWORD</button>
             </a>
 
-            <a href="edita_perfil.php">
+            <a href="edita_perfil_colaborador.php">
               <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
