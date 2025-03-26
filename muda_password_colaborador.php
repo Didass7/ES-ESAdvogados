@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include 'basedados.h';
 
 // Verifica se o utilizador está logado
