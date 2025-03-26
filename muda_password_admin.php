@@ -2,6 +2,13 @@
 
 session_start();
 
+// Verifique se o ID do utilizador está disponível na sessão
+if (!isset($_SESSION['id_utilizador'])) {
+  // Se não estiver disponível, redireciona para login
+  header("Location: login.php");
+  exit();
+// }
+
 include 'basedados.h';
 
 // ID do utilizador logado
