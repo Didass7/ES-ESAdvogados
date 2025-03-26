@@ -1,7 +1,6 @@
-/* casos_gerais_admin.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
+/* Reset básico para consistência entre navegadores */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,164 +8,163 @@
 }
 
 body {
-    background: #5271ff;
+    background-color: #5271ff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Usar min-height em vez de height para conteúdo longo */
+    margin: 0;
     font-family: 'Montserrat', sans-serif;
-    min-height: 100vh;
-    position: relative;
+    overflow-x: hidden; /* Só esconder overflow horizontal */
+    position: relative; /* Para posicionamento absoluto dos filhos */
 }
 
-/* HEADER FIXO */
+/* Estilo do Header */
 header {
-    position: fixed;
+    position: fixed; /* Fixo no topo */
     top: 0;
+    left: 0;
     width: 100%;
     padding: 20px;
     display: flex;
+    justify-content: space-between; /* Alinhar logo e botões */
+    align-items: center;
+    background: transparent;
+    z-index: 1000; /* Garantir que fique acima de outros elementos */
+}
+
+/* Container do Header - pode não ser necessário se o header já é flex */
+.header-container {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 1000;
-    background: transparent;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .header-container2 {
     display: flex;
-    gap: 15px;
+    justify-content: right;
     align-items: center;
+    width: 100%;
+    padding: 0px;
+    gap: 7.5px;
+}
+
+/* Estilo do Logotipo */
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .menu-button {
-    background: white;
+    background-color: white;
     color: #5271ff;
     border: none;
     border-radius: 50px;
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    font-weight: 700;
+    padding: 10px 15px;
+    font-size: 1.25rem; /* Usar unidades relativas (melhor para responsividade) */
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: transform 0.2s;
+    font-weight: bold;
+    white-space: nowrap; /* Impede que o texto quebre */
 }
 
-.menu-button:hover {
-    transform: translateY(-2px);
+.menu-button2 {
+    background-color: white;
+    color: #5271ff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-size: 2.5rem; /* Usar unidades relativas (melhor para responsividade) */
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap; /* Impede que o texto quebre */
 }
 
-/* FORMULÁRIO CENTRAL */
+/* Conteúdo principal - adicionei uma classe para o conteúdo central */
 .main-content {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh;
-    padding: 100px 20px;
-}
-
-.profile-card {
-    background: white;
+    justify-content: center;
+    flex-grow: 1;
     width: 100%;
-    max-width: 500px;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 80px 20px; /* Evitar que o conteúdo fique sob header/footer */
+    gap: 15px;
 }
 
-.form-group {
-    margin-bottom: 30px;
-}
-
-.form-label {
-    display: block;
-    color: #5271ff;
-    font-weight: bold;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-
-.form-input {
+.main-content2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Empurra para baixo */
+    align-items: flex-end; /* Alinha à direita */
+    flex-grow: 1;
     width: 100%;
-    padding: 15px;
-    border: 3px solid #5271ff;
-    border-radius: 15px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #5271ff;
+    padding: 100px 20px; /* Evitar que o conteúdo fique sob header/footer */
+    gap: 15px;
 }
 
-.form-input::placeholder {
-    color: #5271ff;
-    opacity: 0.7;
-    font-weight: normal;
-}
-
-.submit-btn {
-    background: #5271ff;
-    color: white;
-    width: 100%;
-    padding: 18px;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-top: 30px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.submit-btn:hover {
-    background: #425dcc;
-}
-
-/* FOOTER FIXO */
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: white;
-    padding: 15px 0;
+    text-align: center;
+    background-color: white;
+    padding: 10px 0;
 }
 
 .footer-images {
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 15px;
+    padding: 10px 0;
+    flex-wrap: wrap; /* Permite que as imagens quebrem linha em telas pequenas */
 }
 
 .footer-images img {
-    width: 45px;
-    height: 45px;
-    transition: transform 0.3s;
-}
-
-.footer-images img:hover {
-    transform: scale(1.1);
+    width: 40px;
+    height: 40px;
 }
 
 .copyright {
+    font-size: 0.75rem; /* 12px em unidades relativas */
     color: #5271ff;
-    font-size: 0.9rem;
-    margin-top: 10px;
+    margin-top: 5px;
     font-weight: bold;
-    text-align: center;
 }
 
-/* RESPONSIVIDADE */
+/* Media Queries para responsividade */
 @media (max-width: 768px) {
-    .profile-card {
-        padding: 30px;
-        margin: 20px;
+    .login-button {
+        padding: 8px 30px;
+        font-size: 1.2rem;
     }
-
-    .form-label {
-        font-size: 1.1rem;
+    
+    .logo {
+        width: 50px;
+        height: 50px;
     }
+    
+    .footer-images img {
+        width: 35px;
+        height: 35px;
+    }
+}
 
-    .form-input {
+@media (max-width: 480px) {
+    header {
+        padding: 15px 10px;
+    }
+    
+    .login-button {
+        padding: 6px 20px;
         font-size: 1rem;
     }
-
-    .menu-button {
-        padding: 10px 20px;
-        font-size: 1rem;
+    
+    .footer-images {
+        gap: 10px;
     }
 }
