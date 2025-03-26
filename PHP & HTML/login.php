@@ -63,7 +63,7 @@
           if ($result->num_rows > 0) {
               $row = $result->fetch_assoc();
 
-              // Valida a password manualmente (já que não podes usar password_hash)
+              // Valida a password manualmente
               if ($password === $row['password']) {
                   $_SESSION['user'] = $username;
                   header("Location: pagina-inicial.php");
