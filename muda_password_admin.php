@@ -7,6 +7,7 @@ if (!isset($_SESSION['id_utilizador'])) {
   // Se não estiver disponível, redireciona para login
   header("Location: login.php");
   exit();
+}
 // }
 
 include 'basedados.h';
