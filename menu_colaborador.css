@@ -45,11 +45,11 @@ header {
 
 .header-container2 {
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     align-items: center;
     width: 100%;
     padding: 0px;
-    gap: 7.5px;
+    gap: 10px;
 }
 
 /* Estilo do Logotipo */
