@@ -106,25 +106,27 @@ mysqli_close($conn);
         </div>
     </header>
 
-    <div class="login-container">
-        <form action="muda_password_admin.php" method="POST">
-            <div class="form-group">
-                <i class="fa fa-lock input-icon"></i>
-                <input type="password" id="current_password" name="current_password" placeholder="Senha Atual" required>
-            </div>
+    <div class="main-content">
+      <div class="login-container">
+          <form action="muda_password_admin.php" method="POST">
+              <div class="form-group">
+                  <i class="fa fa-lock input-icon"></i>
+                  <input type="password" id="current_password" name="current_password" placeholder="Senha Atual" required>
+              </div>
 
-            <div class="form-group">
-                <i class="fa fa-lock input-icon"></i>
-                <input type="password" id="new_password" name="new_password" placeholder="Nova Senha" required>
-            </div>
+              <div class="form-group">
+                  <i class="fa fa-lock input-icon"></i>
+                  <input type="password" id="new_password" name="new_password" placeholder="Nova Senha" required>
+              </div>
 
-            <div class="form-group">
-                <i class="fa fa-lock input-icon"></i>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Nova Senha" required>
-            </div>
+              <div class="form-group">
+                  <i class="fa fa-lock input-icon"></i>
+                  <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Nova Senha" required>
+              </div>
 
-            <button type="submit">Alterar Senha</button>
-        </form>
+              <button type="submit">Alterar Senha</button>
+          </form>
+      </div>
     </div>
 
     <div class = "main-content2">
