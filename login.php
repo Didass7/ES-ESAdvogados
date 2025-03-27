@@ -21,27 +21,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Valida a password manualmente
         if ($password === $row['password']) {
             $_SESSION['user'] = $username;
-           // Redireciona com base no tipo de utilizador
-           if (isset($row['id_tipo']) && intval($row['id_tipo']) === 1) {
-            header("Location: menu_admin.php");
-            exit;
-          } else {
-            header("Location: menu_colaborador.php");
-            exit;
+            $_SESSION['user_id'] = $row['id_utilizador']; // Adiciona o ID do utilizador na sessão
+
+            // Redireciona com base no tipo de utilizador
+            if (isset($row['id_tipo']) && intval($row['id_tipo']) === 1) {
+                header("Location: menu_admin.php");
+                exit;
+            } else {
+                header("Location: menu_colaborador.php");
+                exit;
             }
         } else {
-          // Credenciais inválidas: redireciona para a página de login
-          header("Location: login.php?error=invalid_credentials");
-          exit;
-          }
+            // Credenciais inválidas: redireciona para a página de login
+            header("Location: login.php?error=invalid_credentials");
+            exit;
+        }
     } else {
-      // Utilizador não encontrado: redireciona para a página de login
-      header("Location: login.php?error=user_not_found");
-      exit;
-  }
+        // Utilizador não encontrado: redireciona para a página de login
+        header("Location: login.php?error=user_not_found");
+        exit;
+    }
 }
 
 mysqli_close($conn);
+
 ?>
 
 <!DOCTYPE html>
