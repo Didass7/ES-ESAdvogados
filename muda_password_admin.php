@@ -95,7 +95,7 @@ mysqli_close($conn);
               <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
-            <a href="login.php">
+            <a href="logout.php">
               <button class="menu-button">LOGOUT</button>
             </a>
 

@@ -25,7 +25,7 @@
             </a>
         </div>
         <div class="header-container2">
-            <a href="login.php">
+            <a href="logout.php">
               <button class="menu-button">LOGOUT</button>
             </a>
 

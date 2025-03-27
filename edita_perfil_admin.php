@@ -75,7 +75,7 @@ mysqli_close($conn);
               <button class="menu-button">MUDAR PASSWORD</button>
             </a>
 
-            <a href="login.php">
+            <a href="logout.php">
               <button class="menu-button">LOGOUT</button>
             </a>
 
