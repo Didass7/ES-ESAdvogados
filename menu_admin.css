@@ -45,13 +45,11 @@ header {
 
 .header-container2 {
     display: flex;
-    justify-content: flex-end; /* Mantém os botões à direita */
+    justify-content: flex-start; /* Alinha os botões à esquerda */
     align-items: center;
-    width: auto; /* Ajusta o tamanho apenas ao necessário */
-    padding-right: 10px; /* Pequeno espaçamento da margem direita */
-    gap: 0px; /* Reduz o espaço entre os botões */
+    gap: 10px; /* Define o espaçamento entre os botões */
+    padding: 0 10px; /* Ajusta o espaçamento interno */
 }
-
 
 /* Estilo do Logotipo */
 .logo {

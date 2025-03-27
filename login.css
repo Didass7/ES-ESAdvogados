@@ -80,27 +80,19 @@ header {
 
 /* Botão de Login */
 button[type="submit"] {
-    background-color: white;
-    color: #5271ff;
-    border: 2px solid #5271ff;
-    border-radius: 50px;
-    font-size: 18px;
+    background-color: #5271ff; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 1rem;
     cursor: pointer;
-    font-weight: bold;
-    transition: all 0.3s;
-    margin-top: 20px;
-    display: flex; /* Faz com que cada botão ocupe uma linha inteira */
-    text-align: center; /* Centraliza o texto dentro do botão */
-    padding: 18px 35px; /* Aumenta a altura do botão */
-    width: 60%; /* Faz com que o botão tenha apenas o tamanho necessário */
-    white-space: nowrap; /* Evita que o texto quebre */
-    gap: 15px;
-    flex-direction: column;
+    transition: background-color 0.3s ease;
 }
 
 button[type="submit"]:hover {
-    background-color: #5369ce;
-    color: white;
+    background-color: #4056d6; /* Cor de fundo ao passar o mouse */
+    color: white; /* Garante que o texto continue branco ao passar o mouse */
 }
 
 /* Estilo do Footer */
@@ -153,4 +145,21 @@ footer {
     .input-container {
         max-width: 300px;
     }
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column; /* Alinha os elementos verticalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    height: 100vh; /* Garante que o contêiner ocupe toda a altura da página */
+    text-align: center; /* Centraliza o texto */
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column; /* Alinha os campos e o botão verticalmente */
+    gap: -5px; /* Espaçamento entre os elementos */
+    width: 100%;
+    max-width: 400px; /* Define uma largura máxima para o formulário */
 }
