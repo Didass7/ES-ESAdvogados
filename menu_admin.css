@@ -48,8 +48,8 @@ header {
     justify-content: flex-end; /* Mantém os botões à direita */
     align-items: center;
     width: auto; /* Ajusta o tamanho apenas ao necessário */
-    padding-right: 20px; /* Pequeno espaçamento da margem direita */
-    gap: 5px; /* Reduz o espaço entre os botões */
+    padding-right: 10px; /* Pequeno espaçamento da margem direita */
+    gap: 0px; /* Reduz o espaço entre os botões */
 }
 
 
