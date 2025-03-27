@@ -7,7 +7,7 @@ $user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_username = trim($_POST['new_username']);
-    $new_email = trim($_POST['new_email']);
+    $new_email = trim($_POST['new_mail']);
 
     // Remove caracteres perigosos (proteção básica)
     $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updates[] = "nomeutilizador = '$new_username'";
     }
     if (!empty($new_email)) {
-        $updates[] = "email = '$new_email'";
+        $updates[] = "mail = '$new_email'";
     }
 
     if (!empty($updates)) {
