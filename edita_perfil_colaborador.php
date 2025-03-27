@@ -1,5 +1,6 @@
 <?php
     
+    session_start();
     include 'basedados.h';
     // ID do utilizador logado
     $user_id = $_SESSION['user_id'];
