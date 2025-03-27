@@ -3,8 +3,15 @@
 session_start();
 include 'basedados.h';
 
+// Verifica se o utilizador está logado e se o ID está definido na sessão
+if (!isset($_SESSION['user_id'])) {
+    // Redireciona para a página de login com uma mensagem de erro
+    header("Location: login.php?error=Por+favor+faça+login+primeiro.");
+    exit();
+}
+
 // ID do utilizador logado
-$user_id = $_SESSION['id_utilizador'];
+$user_id = $_SESSION['user_id'];
 
 // Processa o formulário de mudança de password
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
