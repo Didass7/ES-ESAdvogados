@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
 
         // Valida a password manualmente
-        if ($password === $row['password']) {
+        if (md5($password) === $row['password']) {
             $_SESSION['user'] = $username;
             $_SESSION['user_id'] = $row['id_utilizador']; // Adiciona o ID do utilizador na sessão
 
