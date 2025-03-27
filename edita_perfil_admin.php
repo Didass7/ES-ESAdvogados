@@ -1,55 +1,46 @@
 <?php
-    
-    session_start();
-    include 'basedados.h';
-    // ID do utilizador logado
-  $user_id = $_SESSION['user_id'];
+session_start();
+include 'basedados.h';
 
-  // Processa o formulário de edição de perfil
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $new_username = $_POST['new_username'];
-      $new_email = $_POST['new_email'];
+// ID do utilizador logado
+$user_id = $_SESSION['user_id'];
 
-      // Sanitiza as entradas
-      $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
-      $new_email = str_replace(["'", '"', ";", "--"], "", $new_email);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $new_username = trim($_POST['new_username']);
+    $new_email = trim($_POST['new_email']);
 
-      // Verifica se o nome de utilizador e o e-mail são diferentes do atual antes de atualizar
-      $sql = "SELECT nomeutilizador, email FROM utilizador WHERE id_utilizador = '$user_id'";
-      $result = mysqli_query($conn, $sql);
+    // Remove caracteres perigosos (proteção básica)
+    $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
+    $new_email = str_replace(["'", '"', ";", "--"], "", $new_email);
 
-      if ($result && mysqli_num_rows($result) > 0) {
-          $row = mysqli_fetch_assoc($result);
-          $current_username = $row['nomeutilizador'];
-          $current_email = $row['email'];
+    // Verifica se pelo menos um dos campos foi preenchido
+    if (empty($new_username) && empty($new_email)) {
+        header("Location: edita_perfil_admin.php?error=Nenhuma+alteração+feita.");
+        exit();
+    }
 
-          // Verifica se o nome de utilizador ou e-mail foram alterados
-          if ($new_username !== $current_username || $new_email !== $current_email) {
-              // Atualiza o nome de utilizador e o e-mail no banco de dados
-              $sql_update = "UPDATE utilizador SET nomeutilizador = '$new_username', email = '$new_email' WHERE id_utilizador = '$user_id'";
+    // Constrói a query dinamicamente
+    $updates = [];
+    if (!empty($new_username)) {
+        $updates[] = "nomeutilizador = '$new_username'";
+    }
+    if (!empty($new_email)) {
+        $updates[] = "email = '$new_email'";
+    }
 
-              if (mysqli_query($conn, $sql_update)) {
-                  // Se a atualização for bem-sucedida, redireciona para o menu do colaborador
-                  header("Location: menu_admin.php?success=Perfil+alterado+com+sucesso.");
-                  exit();
-              } else {
-                  // Redireciona com erro de atualização
-                  header("Location: edita_perfil_admin.php?error=Erro+ao+alterar+perfil.");
-                  exit();
-              }
-          } else {
-              // Caso o nome de utilizador e o e-mail sejam os mesmos, redireciona sem alteração
-              header("Location: edita_perfil_admin.php?error=Nenhuma+alteração+feita.");
-              exit();
-          }
-      } else {
-          // Se não encontrar o utilizador
-          header("Location: edita_perfil_admin.php?error=Erro+ao+recuperar+informações+do+perfil.");
-          exit();
-      }
-  }
+    if (!empty($updates)) {
+        $sql_update = "UPDATE utilizador SET " . implode(", ", $updates) . " WHERE id_utilizador = '$user_id'";
+        if (mysqli_query($conn, $sql_update)) {
+            header("Location: menu_admin.php?success=Perfil+alterado+com+sucesso.");
+            exit();
+        } else {
+            header("Location: edita_perfil_admin.php?error=Erro+ao+alterar+perfil.");
+            exit();
+        }
+    }
+}
 
-  mysqli_close($conn);
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
