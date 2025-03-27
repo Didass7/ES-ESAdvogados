@@ -3,8 +3,15 @@
 session_start();
 include 'basedados.h';
 
+// Verifica se o utilizador está logado e se o ID está definido na sessão
+if (!isset($_SESSION['user_id'])) {
+    // Redireciona para a página de login com uma mensagem de erro
+    header("Location: login.php?error=Por+favor+faça+login+primeiro.");
+    exit();
+}
+
 // ID do utilizador logado
-$user_id = $_SESSION['id_utilizador'];
+$user_id = $_SESSION['user_id'];
 
 // Processa o formulário de mudança de password
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -34,27 +41,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verifica se a senha atual inserida corresponde à senha armazenada
             if ($current_password === $stored_password) {
                 // Atualiza a senha no banco de dados
-                $sql_update = "UPDATE utilizador SET password = '$new_password' WHERE id_ utilizador = '$user_id'";
+                $sql_update = "UPDATE utilizador SET password = '$new_password' WHERE id_utilizador = '$user_id'";
                 
-              if (mysqli_query($conn, $sql_update)) {
-                  // Se a senha for alterada com sucesso, redireciona para o menu do colaborador
-                  header("Location: menu_admin.php?success=Senha+alterada+com+sucesso.");
-                  exit();
-              } else {
-                  // Redireciona com erro de atualização
-                  header("Location: muda_password_admin.php?error=Erro+ao+alterar+a+senha.");
-                  exit();
-              }
-          } else {
-              // Se a senha atual não for correta, redireciona com erro
-              header("Location: muda_password_admin.php?error=A+senha+atual+está+incorreta.");
-              exit();
-          }
-      } else {
-          // Se houver erro na consulta ao banco, redireciona com erro
-          header("Location: muda_password_admin.php?error=Erro+ao+verificar+a+senha+atual.");
-          exit();
-      }
+                if (mysqli_query($conn, $sql_update)) {
+                    // Se a senha for alterada com sucesso, redireciona para o menu do colaborador
+                    header("Location: menu_admin.php?success=Senha+alterada+com+sucesso.");
+                    exit();
+                } else {
+                    // Redireciona com erro de atualização
+                    header("Location: muda_password_admin.php?error=Erro+ao+alterar+a+senha.");
+                    exit();
+                }
+            } else {
+                // Se a senha atual não for correta, redireciona com erro
+                header("Location: muda_password_admin.php?error=A+senha+atual+está+incorreta.");
+                exit();
+            }
+        } else {
+            // Se houver erro na consulta ao banco, redireciona com erro
+            header("Location: muda_password_admin.php?error=Erro+ao+verificar+a+senha+atual.");
+            exit();
+        }
     }
 }
 
