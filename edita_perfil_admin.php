@@ -7,36 +7,42 @@ $user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_username = trim($_POST['new_username']);
-    $new_email = trim($_POST['new_mail']);
+    $password = trim($_POST['password']);
 
     // Remove caracteres perigosos (proteção básica)
     $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
-    $new_email = str_replace(["'", '"', ";", "--"], "", $new_email);
+    $password = str_replace(["'", '"', ";", "--"], "", $password);
 
-    // Verifica se pelo menos um dos campos foi preenchido
-    if (empty($new_username) && empty($new_email)) {
-        header("Location: edita_perfil_admin.php?error=Nenhuma+alteração+feita.");
+    // Verifica se os campos foram preenchidos
+    if (empty($new_username) || empty($password)) {
+        header("Location: edita_perfil_admin.php?error=Preencha+todos+os+campos.");
         exit();
     }
 
-    // Constrói a query dinamicamente
-    $updates = [];
-    if (!empty($new_username)) {
-        $updates[] = "nomeutilizador = '$new_username'";
-    }
-    if (!empty($new_email)) {
-        $updates[] = "mail = '$new_email'";
-    }
+    // Verifica se a password está correta
+    $sql_check = "SELECT password FROM utilizador WHERE id_utilizador = '$user_id'";
+    $result = mysqli_query($conn, $sql_check);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
 
-    if (!empty($updates)) {
-        $sql_update = "UPDATE utilizador SET " . implode(", ", $updates) . " WHERE id_utilizador = '$user_id'";
-        if (mysqli_query($conn, $sql_update)) {
-            header("Location: menu_admin.php?success=Perfil+alterado+com+sucesso.");
-            exit();
+        if ($password === $row['password']) {
+            // Atualiza o nome de utilizador no banco de dados
+            $sql_update = "UPDATE utilizador SET nomeutilizador = '$new_username' WHERE id_utilizador = '$user_id'";
+            if (mysqli_query($conn, $sql_update)) {
+                header("Location: menu_admin.php?success=Nome+alterado+com+sucesso.");
+                exit();
+            } else {
+                header("Location: edita_perfil_admin.php?error=Erro+ao+alterar+o+nome.");
+                exit();
+            }
         } else {
-            header("Location: edita_perfil_admin.php?error=Erro+ao+alterar+perfil.");
+            header("Location: edita_perfil_admin.php?error=Password+incorreta.");
             exit();
         }
+    } else {
+        header("Location: edita_perfil_admin.php?error=Erro+ao+verificar+a+password.");
+        exit();
     }
 }
 
@@ -82,22 +88,22 @@ mysqli_close($conn);
 
     <div class="main-content">
       <div class="login-container">
-          <form action="edita_perfil_admin.php" method="POST">
-              <!-- Campo para o novo nome de utilizador -->
-              <div class="form-group">
-                  <i class="fa fa-user input-icon"></i>
-                  <input type="text" id="new_username" name="new_username" placeholder="Novo Nome de Utilizador" required>
-              </div>
+        <form action="edita_perfil_admin.php" method="POST">
+            <!-- Campo para o novo nome de utilizador -->
+            <div class="form-group">
+                <i class="fa fa-user input-icon"></i>
+                <input type="text" id="new_username" name="new_username" placeholder="Novo Nome de Utilizador" required>
+            </div>
 
-              <!-- Campo para o novo e-mail -->
-              <div class="form-group">
-                  <i class="fa fa-envelope input-icon"></i>
-                  <input type="email" id="new_email" name="new_email" placeholder="Novo E-mail" required>
-              </div>
+            <!-- Campo para confirmação da password -->
+            <div class="form-group">
+                <i class="fa fa-lock input-icon"></i>
+                <input type="password" id="password" name="password" placeholder="Digite sua Password" required>
+            </div>
 
-              <!-- Botão para submeter o formulário -->
-              <button type="submit">Alterar Perfil</button>
-          </form>
+            <!-- Botão para submeter o formulário -->
+            <button type="submit">Alterar Nome de Utilizador</button>
+        </form>
       </div>
     </div>
 
