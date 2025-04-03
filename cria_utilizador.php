@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verifica se o e-mail é válido
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // Redireciona de volta para a página de registo com uma mensagem de erro
-        header("Location: cria_utilizador.php?error=invalid_email");
+        // Exibe um alerta e redireciona de volta para a página de registo
+        echo "<script>alert('E-mail inválido. Por favor, insira um e-mail válido.'); window.location.href='cria_utilizador.php';</script>";
         exit();
     }
 
@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $checkUser);
 
     if (mysqli_num_rows($result) > 0) {
-        // Redireciona de volta para a página de registo com uma mensagem de erro
-        header("Location: cria_utilizador.php?error=user_exists");
+        // Exibe um alerta e redireciona de volta para a página de registo
+        echo "<script>alert('Utilizador já existe. Tente com outro nome de utilizador ou e-mail.'); window.location.href='cria_utilizador.php';</script>";
         exit();
     }
 
@@ -33,19 +33,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$username', '$email', '$password', 2)";
 
     if (mysqli_query($conn, $sql)) {
-        // Redireciona para o menu do administrador após sucesso
-        header("Location: menu_admin.php");
+        // Exibe um alerta de sucesso e redireciona para o menu do administrador
+        echo "<script>alert('Utilizador criado com sucesso!'); window.location.href='menu_admin.php';</script>";
         exit();
     } else {
-        // Redireciona de volta para a página de registo com uma mensagem de erro
-        header("Location: cria_utilizador.php?error=db_error");
+        // Exibe um alerta e redireciona de volta para a página de registo
+        echo "<script>alert('Erro ao criar o utilizador. Tente novamente.'); window.location.href='cria_utilizador.php';</script>";
         exit();
     }
 }
 
 mysqli_close($conn);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
