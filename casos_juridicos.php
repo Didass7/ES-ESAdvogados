@@ -20,7 +20,7 @@
 
     <header>
         <div class="header-container">
-            <a href="pagina-inicial.php">
+            <a href="menu_colaborador.php">
                 <img src="logo.png" alt="Logotipo" class="logo">
             </a>
         </div>

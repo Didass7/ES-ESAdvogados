@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-
 include 'basedados.h';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,19 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit;
             }
         } else {
-            // Credenciais inválidas: redireciona para a página de login
-            header("Location: login.php?error=invalid_credentials");
+            // Credenciais inválidas: redireciona para a página de login com um alerta
+            echo "<script>alert('Credenciais inválidas. Tente novamente.'); window.location.href='login.php';</script>";
             exit;
         }
     } else {
-        // Utilizador não encontrado: redireciona para a página de login
-        header("Location: login.php?error=user_not_found");
+        // Utilizador não encontrado: redireciona para a página de login com um alerta
+        echo "<script>alert('Utilizador não encontrado. Verifique o nome de utilizador.'); window.location.href='login.php';</script>";
         exit;
     }
 }
 
 mysqli_close($conn);
-
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +62,7 @@ mysqli_close($conn);
 
     <header>
         <div class="header-container">
-            <a href="pagina-inicial.php">
+            <a href="login.php">
                 <img src="logo.png" alt="Logotipo" class="logo">
             </a>
         </div>

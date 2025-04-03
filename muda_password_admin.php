@@ -3,17 +3,13 @@
 session_start();
 include 'basedados.h';
 
-// Verifica se o utilizador está logado e se o ID está definido na sessão
 if (!isset($_SESSION['user_id'])) {
-    // Redireciona para a página de login com uma mensagem de erro
-    header("Location: login.php?error=Por+favor+faça+login+primeiro.");
+    echo "<script>alert('Por favor, faça login primeiro.'); window.location.href='login.php';</script>";
     exit();
 }
 
-// ID do utilizador logado
 $user_id = $_SESSION['user_id'];
 
-// Processa o formulário de mudança de password
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
@@ -24,42 +20,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = str_replace(["'", '"', ";", "--"], "", $new_password);
     $confirm_password = str_replace(["'", '"', ";", "--"], "", $confirm_password);
 
-    // Verifica se a nova password corresponde à confirmação
     if ($new_password !== $confirm_password) {
-        // Redireciona com mensagem de erro
-        header("Location: muda_password_admin.php?error=As+passwords+não+coincidem.");
+        echo "<script>alert('As passwords não coincidem.'); window.location.href='muda_password_admin.php';</script>";
         exit();
     } else {
-        // Verifica se a senha atual está correta
-        $sql = "SELECT password, id_utilizador FROM utilizador WHERE id_utilizador = '$user_id'";
+        $current_password_hashed = md5($current_password);
+
+        $sql = "SELECT password FROM utilizador WHERE id_utilizador = '$user_id'";
         $result = mysqli_query($conn, $sql);
-        
+
         if ($result && mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
             $stored_password = $row['password'];
-            
-            // Verifica se a senha atual inserida corresponde à senha armazenada
-            if ($current_password === $stored_password) {
-                // Atualiza a senha no banco de dados
-                $sql_update = "UPDATE utilizador SET password = '$new_password' WHERE id_utilizador = '$user_id'";
-                
+
+            if ($current_password_hashed === $stored_password) {
+                $new_password_hashed = md5($new_password);
+
+                $sql_update = "UPDATE utilizador SET password = '$new_password_hashed' WHERE id_utilizador = '$user_id'";
+
                 if (mysqli_query($conn, $sql_update)) {
-                    // Se a senha for alterada com sucesso, redireciona para o menu do colaborador
-                    header("Location: menu_admin.php?success=Senha+alterada+com+sucesso.");
+                    echo "<script>alert('Senha alterada com sucesso.'); window.location.href='menu_admin.php';</script>";
                     exit();
                 } else {
-                    // Redireciona com erro de atualização
-                    header("Location: muda_password_admin.php?error=Erro+ao+alterar+a+senha.");
+                    echo "<script>alert('Erro ao alterar a senha.'); window.location.href='muda_password_admin.php';</script>";
                     exit();
                 }
             } else {
-                // Se a senha atual não for correta, redireciona com erro
-                header("Location: muda_password_admin.php?error=A+senha+atual+está+incorreta.");
+                echo "<script>alert('A senha atual está incorreta.'); window.location.href='muda_password_admin.php';</script>";
                 exit();
             }
         } else {
-            // Se houver erro na consulta ao banco, redireciona com erro
-            header("Location: muda_password_admin.php?error=Erro+ao+verificar+a+senha+atual.");
+            echo "<script>alert('Erro ao verificar a senha atual.'); window.location.href='muda_password_admin.php';</script>";
             exit();
         }
     }
@@ -85,7 +76,7 @@ mysqli_close($conn);
 
     <header>
         <div class="header-container">
-            <a href="pagina-inicial.php">
+            <a href="menu_admin.php">
                 <img src="logo.png" alt="Logotipo" class="logo">
             </a>
         </div>

@@ -1,55 +1,54 @@
 <?php
-    
-    session_start();
-    include 'basedados.h';
-    // ID do utilizador logado
-    $user_id = $_SESSION['user_id'];
+session_start();
+include 'basedados.h';
 
-    // Processa o formulário de edição de perfil
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $new_username = $_POST['new_username'];
-        $new_email = $_POST['new_email'];
+$user_id = $_SESSION['user_id'];
 
-        // Sanitiza as entradas
-        $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
-        $new_email = str_replace(["'", '"', ";", "--"], "", $new_email);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $new_username = trim($_POST['new_username']);
+    $password = trim($_POST['password']);
 
-        // Verifica se o nome de utilizador e o e-mail são diferentes do atual antes de atualizar
-        $sql = "SELECT nomeutilizador, email FROM utilizador WHERE id_utilizador = '$user_id'";
-        $result = mysqli_query($conn, $sql);
+    // Remove caracteres perigosos (proteção básica)
+    $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
+    $password = str_replace(["'", '"', ";", "--"], "", $password);
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $current_username = $row['nomeutilizador'];
-            $current_email = $row['email'];
+    // Verifica se os campos foram preenchidos
+    if (empty($new_username) || empty($password)) {
+        echo "<script>alert('Preencha todos os campos.'); window.location.href='edita_perfil_colaborador.php';</script>";
+        exit();
+    }
 
-            // Verifica se o nome de utilizador ou e-mail foram alterados
-            if ($new_username !== $current_username || $new_email !== $current_email) {
-                // Atualiza o nome de utilizador e o e-mail no banco de dados
-                $sql_update = "UPDATE utilizador SET nomeutilizador = '$new_username', email = '$new_email' WHERE id_utilizador = '$user_id'";
+    // Aplica MD5 à password inserida pelo utilizador
+    $password_hashed = md5($password);
 
-                if (mysqli_query($conn, $sql_update)) {
-                    // Se a atualização for bem-sucedida, redireciona para o menu do colaborador
-                    header("Location: menu_colaborador.php?success=Perfil+alterado+com+sucesso.");
-                    exit();
-                } else {
-                    // Redireciona com erro de atualização
-                    header("Location: edita_perfil_colaborador.php?error=Erro+ao+alterar+perfil.");
-                    exit();
-                }
+    // Verifica se a password está correta
+    $sql_check = "SELECT password FROM utilizador WHERE id_utilizador = '$user_id'";
+    $result = mysqli_query($conn, $sql_check);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        if ($password_hashed === $row['password']) {
+            // Atualiza o nome de utilizador no banco de dados
+            $sql_update = "UPDATE utilizador SET nomeutilizador = '$new_username' WHERE id_utilizador = '$user_id'";
+            if (mysqli_query($conn, $sql_update)) {
+                echo "<script>alert('Nome alterado com sucesso.'); window.location.href='menu_colaborador.php';</script>";
+                exit();
             } else {
-                // Caso o nome de utilizador e o e-mail sejam os mesmos, redireciona sem alteração
-                header("Location: edita_perfil_colaborador.php?error=Nenhuma+alteração+feita.");
+                echo "<script>alert('Erro ao alterar o nome.'); window.location.href='edita_perfil_colaborador.php';</script>";
                 exit();
             }
         } else {
-            // Se não encontrar o utilizador
-            header("Location: edita_perfil_colaborador.php?error=Erro+ao+recuperar+informações+do+perfil.");
+            echo "<script>alert('Password incorreta.'); window.location.href='edita_perfil_colaborador.php';</script>";
             exit();
         }
+    } else {
+        echo "<script>alert('Erro ao verificar a password.'); window.location.href='edita_perfil_colaborador.php';</script>";
+        exit();
     }
+}
 
-    mysqli_close($conn);
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -99,10 +98,10 @@
                   <input type="text" id="new_username" name="new_username" placeholder="Novo Nome de Utilizador" required>
               </div>
 
-              <!-- Campo para o novo e-mail -->
+              <!-- Campo para confirmação da password -->
               <div class="form-group">
-                  <i class="fa fa-envelope input-icon"></i>
-                  <input type="email" id="new_email" name="new_email" placeholder="Novo E-mail" required>
+                <i class="fa fa-lock input-icon"></i>
+                <input type="password" id="password" name="password" placeholder="Digite sua Password" required>
               </div>
 
               <!-- Botão para submeter o formulário -->

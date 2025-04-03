@@ -2,7 +2,6 @@
 session_start();
 include 'basedados.h';
 
-// ID do utilizador logado
 $user_id = $_SESSION['user_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -15,33 +14,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verifica se os campos foram preenchidos
     if (empty($new_username) || empty($password)) {
-        header("Location: edita_perfil_admin.php?error=Preencha+todos+os+campos.");
+        echo "<script>alert('Preencha todos os campos.'); window.location.href='edita_perfil_admin.php';</script>";
         exit();
     }
+
+    // Aplica MD5 à password inserida pelo utilizador
+    $password_hashed = md5($password);
 
     // Verifica se a password está correta
     $sql_check = "SELECT password FROM utilizador WHERE id_utilizador = '$user_id'";
     $result = mysqli_query($conn, $sql_check);
-    
+
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
 
-        if ($password === $row['password']) {
+        if ($password_hashed === $row['password']) {
             // Atualiza o nome de utilizador no banco de dados
             $sql_update = "UPDATE utilizador SET nomeutilizador = '$new_username' WHERE id_utilizador = '$user_id'";
             if (mysqli_query($conn, $sql_update)) {
-                header("Location: menu_admin.php?success=Nome+alterado+com+sucesso.");
+                echo "<script>alert('Nome alterado com sucesso.'); window.location.href='menu_admin.php';</script>";
                 exit();
             } else {
-                header("Location: edita_perfil_admin.php?error=Erro+ao+alterar+o+nome.");
+                echo "<script>alert('Erro ao alterar o nome.'); window.location.href='edita_perfil_admin.php';</script>";
                 exit();
             }
         } else {
-            header("Location: edita_perfil_admin.php?error=Password+incorreta.");
+            echo "<script>alert('Password incorreta.'); window.location.href='edita_perfil_admin.php';</script>";
             exit();
         }
     } else {
-        header("Location: edita_perfil_admin.php?error=Erro+ao+verificar+a+password.");
+        echo "<script>alert('Erro ao verificar a password.'); window.location.href='edita_perfil_admin.php';</script>";
         exit();
     }
 }
@@ -66,7 +68,7 @@ mysqli_close($conn);
 
     <header>
         <div class="header-container">
-            <a href="pagina-inicial.php">
+            <a href="menu_admin.php">
                 <img src="logo.png" alt="Logotipo" class="logo">
             </a>
         </div>
