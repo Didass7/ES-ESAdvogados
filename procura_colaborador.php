@@ -1,8 +1,27 @@
 <?php
 
-    session_start();
+    session_abort();
     include 'basedados.h';
-    
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nome = $_POST['nomeUtilizador'];
+        $nome = mysqli_real_escape_string($conn, $nome);
+
+        $sql = "SELECT * FROM utilizador WHERE nomeUtilizador = '$nome' AND id_tipo = 2";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $utilizador = mysqli_fetch_assoc($result);
+            $nome = urlencode($utilizador['nomeUtilizador']);
+            $mail = urlencode($utilizador['mail']);
+            header("Location: consulta_colaborador.php?nome=$nome&mail=$mail");
+            exit();
+        } else {
+            echo "<script>alert('Utilizador não encontrado ou não é um colaborador.');</script>";
+        }
+
+        mysqli_close($conn);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -11,8 +30,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Administrador</title>
-    <link rel="stylesheet" href="menu_admin.css">
+    <title>Consultar Colaborador</title>
+    <link rel="stylesheet" href="procura_colaborador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
@@ -27,14 +46,6 @@
             </a>
         </div>
         <div class="header-container2">
-            <a href="muda_password_admin.php">
-              <button class="menu-button">MUDAR PASSWORD</button>
-            </a>
-
-            <a href="edita_perfil_admin.php">
-              <button class="menu-button">EDITAR PERFIL</button>
-            </a>
-
             <a href="logout.php">
               <button class="menu-button">LOGOUT</button>
             </a>
@@ -43,18 +54,23 @@
               ADMINISTRADOR
               <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
+
+            <a href="menu_admin.php">
+              <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
+            </a>
         </div>
     </header>
 
-    <div class="main-content">
-      <a href="cria_utilizador.php">
-        <button class="menu-button2">CRIAR UTILIZADORES</button>
-      </a>
-
-      <a href="procura_colaborador.php">
-        <button class="menu-button2">CONSULTAR COLABORADORES</button>
-      </a>
-    </div>
+    
+    <form method="POST" action="">
+        <div class="search-container">
+            <div class="input-wrapper">
+                <span class="icon">🔍</span>
+                <input type="text" name="nomeUtilizador" placeholder="Insira o nome do colaborador" required>
+            </div>
+            <button class="search-button" type="submit">PROCURAR</button>
+        </div>
+    </form>
 
     <footer>
       <div class="footer-images">

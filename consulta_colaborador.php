@@ -1,7 +1,23 @@
 <?php
-    
-    include 'basedados.h';
-    
+include 'basedados.h';
+
+if (isset($_GET['nome']) && isset($_GET['mail'])) {
+    $nome = urldecode($_GET['nome']);
+    $mail = urldecode($_GET['mail']);
+
+    // Protege contra injeção SQL
+    $nome = mysqli_real_escape_string($conn, $nome);
+    $mail = mysqli_real_escape_string($conn, $mail);
+
+    // Vai buscar os dados completos do colaborador
+    $sql = "SELECT * FROM utilizador WHERE nomeUtilizador = '$nome' AND mail = '$mail' AND id_tipo = 2";
+    $result = mysqli_query($conn, $sql);
+    $utilizador = mysqli_fetch_assoc($result);
+    mysqli_close($conn);
+} else {
+    $utilizador = null;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +56,15 @@
             </a>
         </div>
     </header>
+
+    <div class="container mt-5">
+      <div class="info-box">
+          <h2 class="text-center">Informações do Colaborador</h2>
+          <p><strong>ID Utilizador:</strong> <?php echo $utilizador['id_utilizador']; ?></p>
+          <p><strong>Nome de Utilizador:</strong> <?php echo $utilizador['nomeUtilizador']; ?></p>
+          <p><strong>Email:</strong> <?php echo $utilizador['mail']; ?></p>
+      </div>
+    </div>
 
     <footer>
       <div class="footer-images">
