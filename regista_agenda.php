@@ -100,13 +100,13 @@
                     <input type="text" class="input-field" name="acao['.$mes.'][]" placeholder="AÇÃO">
                   </div>
                 </div>
-                <button type="button" class="menu-button adicionar-btn">ADICIONAR</button>
+                <button type="button" class="add-button">ADICIONAR</button>
               </div>';
           }
           ?>
         </div>
         <div class="submit-wrapper">
-          <button type="submit" class="menu-button">SUBMETER</button>
+          <button type="submit" class="submit-button">SUBMETER</button>
         </div>
       </form>
     </div>

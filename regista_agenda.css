@@ -93,8 +93,7 @@ header {
   margin-bottom: 4px;
 }
 
-.input-field, 
-.menu-button {
+.input-field, .menu-button {
   background-color: white;
   border: none;
   border-radius: 20px;
@@ -104,6 +103,33 @@ header {
   font-weight: bold;
   color: #5271ff;
   font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+.add-button{
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #5271ff;
+  font-size: 0.85rem;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.submit-button {
+  background-color:#5271ff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px;
+  width: 18%;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2rem;
 }
 
 .input-field::placeholder {
