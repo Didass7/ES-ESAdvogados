@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (md5($password) === $row['password']) {
             $_SESSION['user'] = $username;
             $_SESSION['user_id'] = $row['id_utilizador']; // Adiciona o ID do utilizador na sessão
+            $_SESSION['id_utilizador'] = $row['id_utilizador']; // Adiciona o ID do utilizador na sessão
 
             // Redireciona com base no tipo de utilizador
             if (isset($row['id_tipo']) && intval($row['id_tipo']) === 1) {

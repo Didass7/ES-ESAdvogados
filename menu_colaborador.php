@@ -1,7 +1,11 @@
 <?php
-    session_start();
-    include 'basedados.h';
-    
+session_start();
+include 'basedados.h';
+
+if (!isset($_SESSION['id_utilizador'])) {
+    echo "<script>alert('Sessão expirada. Faça login novamente.'); window.location.href = 'login.php';</script>";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
