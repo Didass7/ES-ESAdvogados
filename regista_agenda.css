@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #5271ff;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: #5271ff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-container img.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.header-container2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.main-content > div {
+  background-color: white;
+  border-radius: 40px;
+  padding: 30px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #5271ff;
+  font-size: 1.5rem;
+}
+
+/* GRID DE MESES */
+.grid-meses {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 0 15px;
+}
+
+.mes-card {
+  background-color: #5271ff;
+  color: white;
+  border-radius: 15px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mes-card h3 {
+  font-size: 0.95rem;
+  text-align: center;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.input-field, 
+.menu-button {
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #5271ff;
+  font-size: 0.85rem;
+}
+
+.input-field::placeholder {
+  color: #5271ff;
+}
+
+/* SUBMETER BUTTON */
+.submit-wrapper {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 8px;
+}
+
+.submit-wrapper .menu-button {
+  background-color: white;
+  color: #5271ff;
+  padding: 8px 35px;
+  font-size: 0.9rem;
+  border-radius: 25px;
+  font-weight: bold;
+}
+
+/* HEADER BUTTONS */
+header .menu-button {
+  background-color: white;
+  color: #5271ff;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.icon-large {
+  width: 35px;
+  height: 35px;
+}
+
+/* FOOTER */
+footer {
+  background-color: white;
+  padding: 15px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 10px;
+  position: relative;
+}
+
+.footer-text {
+  color: #6B83FF;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.footer-images {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+
+.footer-images img {
+  width: 40px;
+  height: 40px;
+}
+
+.copyright-wrapper {
+  text-align: center;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.copyright {
+  color: #6B83FF;
+  font-size: 0.9rem;
+}
+
+/* RESPONSIVO */
+@media (max-width: 1200px) {
+  .grid-meses {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container2 {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .grid-meses {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-meses {
+    grid-template-columns: 1fr;
+  }
+}
