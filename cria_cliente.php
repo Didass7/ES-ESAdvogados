@@ -22,14 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_colaborador = $_SESSION['id_utilizador'];
 
     // Captura e sanitiza os dados
-    $nome = mysqli_real_escape_string($conn, $_POST['nome']);
-    $dataNasc = mysqli_real_escape_string($conn, $_POST['nascimento']);
-    $nif = mysqli_real_escape_string($conn, $_POST['nif']);
-    $contacto1 = mysqli_real_escape_string($conn, $_POST['contacto1']);
-    $contacto2 = mysqli_real_escape_string($conn, $_POST['contacto2']);
-    $morada = mysqli_real_escape_string($conn, $_POST['morada']);
-    $endereco_faturacao = mysqli_real_escape_string($conn, $_POST['endereco_faturacao']);
-    $pagamento = mysqli_real_escape_string($conn, $_POST['pagamento']);
+    $nome = $_POST['nome'];
+    $dataNasc =$_POST['nascimento'];
+    $nif =$_POST['nif'];
+    $contacto1 =$_POST['contacto1'];
+    $contacto2 =$_POST['contacto2'];
+    $morada =$_POST['morada'];
+    $endereco_faturacao =$_POST['endereco_faturacao'];
+    $pagamento =$_POST['pagamento'];
 
     $sql = "INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador) 
             VALUES ('$nome', '$dataNasc', '$nif', '$contacto1', '$contacto2', '$morada', '$endereco_faturacao', '$pagamento', '$id_colaborador')";
@@ -130,11 +130,13 @@ $conn->close();
         </select>
       </div>
     </form>
-    <div style="grid-column: span 2; text-align: center; margin-top: 20px;">
-        <button type="submit" style="background-color: white; color: #5271ff; border: 2px solid #5271ff; padding: 12px 40px; border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer;">
-          SUBMETER
-        </button>
-    </div>
+    <form action="cria_cliente.php" method="POST">
+      <div style="grid-column: span 2; text-align: center; margin-top: 20px;">
+          <button type="submit" style="background-color: white; color: #5271ff; border: 2px solid #5271ff; padding: 12px 40px; border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer;">
+            SUBMETER
+          </button>
+      </div>
+    </form>
   </main>
 
     
