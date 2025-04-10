@@ -1,5 +1,6 @@
 <?php
   session_start();
+
   if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -10,6 +11,7 @@
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $dias = $_POST['dia'] ?? [];
       $acoes = $_POST['acao'] ?? [];
+      $colaborador = $_SESSION['user_id'];
 
       foreach ($dias as $mes => $valoresDias) {
           foreach ($valoresDias as $index => $dia) {
@@ -17,16 +19,22 @@
 
               // Ignora se estiver vazio
               if (!empty($dia) && !empty($acao)) {
-                  $stmt = $conn->prepare("INSERT INTO agenda (mes, dia, acao) VALUES (?, ?, ?)");
-                  $stmt->bind_param("sis", $mes, $dia, $acao);
+                  // Insere o mês, dia, ação e colaborador na base de dados
+                  $stmt = $conn->prepare("INSERT INTO compromisso (mes, dia, acao, colaborador) VALUES (?, ?, ?, ?)");
+                  $stmt->bind_param("sisi", $mes, $dia, $acao, $colaborador);
                   $stmt->execute();
               }
           }
       }
-
-      // Redireciona ou mostra confirmação
-      header("Location: menu_colaborador.php?sucesso=1");
+      echo "<script>alert('Agenda registada com sucesso!'); window.location.href='menu_colaborador.php';</script>";
       exit();
+
+      if (!$stmt->execute()) {
+        echo "<script>alert('Erro ao registar a agenda.'); window.location.href='regista_agenda.php';</script>";
+        exit();
+      }
+      $stmt->close();
+      $conn->close();
   }
 ?>
 
