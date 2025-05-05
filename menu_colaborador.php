@@ -54,6 +54,10 @@ if (!isset($_SESSION['id_utilizador'])) {
         <button class="menu-button2">CRIAR CLIENTE</button>
       </a>
 
+      <a href="gerir_cliente.php">
+        <button class="menu-button2">GERIR CLIENTE</button>
+      </a>
+
       <a href="regista_agenda.php">
         <button class="menu-button2">REGISTAR AGENDA</button>
       </a>

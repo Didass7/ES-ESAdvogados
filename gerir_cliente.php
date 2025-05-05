@@ -1,23 +1,11 @@
 <?php
+session_start();
 include 'basedados.h';
 
-if (isset($_GET['nome']) && isset($_GET['mail'])) {
-    $nome = urldecode($_GET['nome']);
-    $mail = urldecode($_GET['mail']);
-
-    // Protege contra injeção SQL
-    $nome = mysqli_real_escape_string($conn, $nome);
-    $mail = mysqli_real_escape_string($conn, $mail);
-
-    // Vai buscar os dados completos do colaborador
-    $sql = "SELECT * FROM utilizador WHERE nomeUtilizador = '$nome' AND mail = '$mail' AND id_tipo = 2";
-    $result = mysqli_query($conn, $sql);
-    $utilizador = mysqli_fetch_assoc($result);
-    mysqli_close($conn);
-} else {
-    $utilizador = null;
+if (!isset($_SESSION['id_utilizador'])) {
+    echo "<script>alert('Sessão expirada. Faça login novamente.'); window.location.href = 'login.php';</script>";
+    exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -26,8 +14,8 @@ if (isset($_GET['nome']) && isset($_GET['mail'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Colaborador</title>
-    <link rel="stylesheet" href="casos_admin.css">
+    <title>Menu Colaborador</title>
+    <link rel="stylesheet" href="menu_colaborador.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
@@ -37,33 +25,45 @@ if (isset($_GET['nome']) && isset($_GET['mail'])) {
 
     <header>
         <div class="header-container">
-            <a href="menu_admin.php">
+            <a href="menu_colaborador.php">
                 <img src="logo.png" alt="Logotipo" class="logo">
             </a>
         </div>
         <div class="header-container2">
+            <a href="muda_password_colaborador.php">
+              <button class="menu-button">MUDAR PASSWORD</button>
+            </a>
+
+            <a href="edita_perfil_colaborador.php">
+              <button class="menu-button">EDITAR PERFIL</button>
+            </a>
+
             <a href="logout.php">
               <button class="menu-button">LOGOUT</button>
             </a>
 
             <button class="menu-button">
-              ADMINISTRADOR
+              COLABORADOR
               <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
 
-            <a href="menu_admin.php">
+            <a href="menu_colaborador.php">
               <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
             </a>
         </div>
     </header>
 
-    <div class="container mt-5">
-      <div class="info-box">
-          <h2 class="text-center">Informações do Colaborador</h2>
-          <p><strong>ID Utilizador:</strong> <?php echo $utilizador['id_utilizador']; ?></p>
-          <p><strong>Nome de Utilizador:</strong> <?php echo $utilizador['nomeUtilizador']; ?></p>
-          <p><strong>Email:</strong> <?php echo $utilizador['mail']; ?></p>
-      </div>
+    <div class="main-content">
+      
+      <a href="consultar_cliente.php">
+        <button class="menu-button2">CONSULTAR CLIENTE</button>
+      </a>
+
+      <a href="editar_cliente.php">
+        <button class="menu-button2">EDITAR CLIENTE</button>
+      </a>
+
+      
     </div>
 
     <footer>
@@ -82,7 +82,6 @@ if (isset($_GET['nome']) && isset($_GET['mail'])) {
       </div> 
       <p class="copyright">© 2025 Todos os direitos reservados.</p> 
     </footer>
-
 </body>
 
 </html>

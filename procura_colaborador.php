@@ -1,26 +1,29 @@
 <?php
-
-    session_abort();
+    session_start();
     include 'basedados.h';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nome = $_POST['nomeUtilizador'];
         $nome = mysqli_real_escape_string($conn, $nome);
 
+        // Consulta para encontrar colaboradores pelo nome
         $sql = "SELECT * FROM utilizador WHERE nomeUtilizador = '$nome' AND id_tipo = 2";
         $result = mysqli_query($conn, $sql);
-
-        if (mysqli_num_rows($result) > 0) {
+        
+        if (!$result) {
+            echo "<script>alert('Erro na consulta: " . mysqli_error($conn) . "'); window.location.href='procura_colaborador.php';</script>";
+            exit();
+        } 
+        else if (mysqli_num_rows($result) > 0) {
             $utilizador = mysqli_fetch_assoc($result);
             $nome = urlencode($utilizador['nomeUtilizador']);
             $mail = urlencode($utilizador['mail']);
             header("Location: consulta_colaborador.php?nome=$nome&mail=$mail");
             exit();
         } else {
-            echo "<script>alert('Utilizador não encontrado ou não é um colaborador.');</script>";
+            echo "<script>alert('Colaborador \"$nome\" não encontrado. Verifique se o nome está correto.'); window.location.href='procura_colaborador.php';</script>";
+            exit();
         }
-
-        mysqli_close($conn);
     }
 ?>
 

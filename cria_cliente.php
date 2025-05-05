@@ -21,24 +21,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id_colaborador = $_SESSION['id_utilizador'];
 
-    // Captura e sanitiza os dados
-    $nome = $_POST['nome'];
-    $dataNasc =$_POST['nascimento'];
-    $nif =$_POST['nif'];
-    $contacto1 =$_POST['contacto1'];
-    $contacto2 =$_POST['contacto2'];
-    $morada =$_POST['morada'];
-    $endereco_faturacao =$_POST['endereco_faturacao'];
-    $pagamento =$_POST['pagamento'];
+    // Validação e sanitização dos inputs
+    $nome = mysqli_real_escape_string($conn, $_POST['nome'] ?? '');
+    $dataNasc = mysqli_real_escape_string($conn, $_POST['nascimento'] ?? '');
+    $nif = mysqli_real_escape_string($conn, $_POST['nif'] ?? '');
+    $contacto1 = mysqli_real_escape_string($conn, $_POST['contacto1'] ?? '');
+    $contacto2 = mysqli_real_escape_string($conn, $_POST['contacto2'] ?? '');
+    $morada = mysqli_real_escape_string($conn, $_POST['morada'] ?? '');
+    $endereco_faturacao = mysqli_real_escape_string($conn, $_POST['endereco_faturacao'] ?? '');
+    $pagamento = mysqli_real_escape_string($conn, $_POST['pagamento'] ?? '');
 
-    $sql = "INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador) 
-            VALUES ('$nome', '$dataNasc', '$nif', '$contacto1', '$contacto2', '$morada', '$endereco_faturacao', '$pagamento', '$id_colaborador')";
+    // Usar prepared statement para evitar SQL injection
+    $stmt = $conn->prepare("INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssi", $nome, $dataNasc, $nif, $contacto1, $contacto2, $morada, $endereco_faturacao, $pagamento, $id_colaborador);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         echo "<script>alert('Novo cliente registado com sucesso'); window.location.href = 'menu_colaborador.php';</script>";
     } else {
-        echo "<script>alert('Erro ao registar cliente: " . $conn->error . "'); window.location.href = 'cria_cliente.php';</script>";
+        echo "<script>alert('Erro ao registar cliente: " . $stmt->error . "'); window.location.href = 'cria_cliente.php';</script>";
     }
+    $stmt->close();
 }
 
 $conn->close();
