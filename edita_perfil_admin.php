@@ -2,62 +2,122 @@
 session_start();
 include 'basedados.h';
 
+// Verificar se o usuário está logado
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 $user_id = $_SESSION['user_id'];
+
+// Verificar se o usuário é um administrador (id_tipo = 1)
+$sql_check_admin = "SELECT id_tipo FROM utilizador WHERE id_utilizador = '$user_id'";
+$result_admin = mysqli_query($conn, $sql_check_admin);
+
+if (!$result_admin || mysqli_num_rows($result_admin) == 0) {
+    echo "<script>alert('Erro ao verificar permissões.'); window.location.href='login.php';</script>";
+    exit();
+}
+
+$user_role = mysqli_fetch_assoc($result_admin)['id_tipo'];
+if ($user_role != 1) { // Se não for administrador (id_tipo = 1)
+    echo "<script>alert('Acesso não autorizado.'); window.location.href='login.php';</script>";
+    exit();
+}
+
+// Verificar se foi passado um ID de usuário para edição
+$edit_user_id = isset($_GET['id']) ? $_GET['id'] : $user_id;
+$is_editing_other = ($edit_user_id != $user_id);
+
+// Se estiver editando outro usuário, verificar se é um colaborador
+if ($is_editing_other) {
+    $sql_check_user = "SELECT id_tipo FROM utilizador WHERE id_utilizador = '$edit_user_id'";
+    $result_user_check = mysqli_query($conn, $sql_check_user);
+    
+    if (!$result_user_check || mysqli_num_rows($result_user_check) == 0) {
+        echo "<script>alert('Usuário não encontrado.'); window.location.href='procura_colaborador.php';</script>";
+        exit();
+    }
+    
+    $edit_user_role = mysqli_fetch_assoc($result_user_check)['id_tipo'];
+    
+    // Se o usuário a ser editado for um administrador (id_tipo = 1) e não for o próprio usuário logado
+    if ($edit_user_role == 1 && $edit_user_id != $user_id) {
+        echo "<script>alert('Não é permitido editar o perfil de outros administradores.'); window.location.href='procura_colaborador.php';</script>";
+        exit();
+    }
+    
+    // Define se está editando um colaborador
+    $is_editing_collaborator = ($edit_user_role == 2);
+} else {
+    $is_editing_collaborator = false;
+}
+
+// Verificar se há uma mensagem de sucesso na sessão
+$success_message = "";
+if (isset($_SESSION['success_message'])) {
+    $success_message = $_SESSION['success_message'];
+    // Limpar a mensagem da sessão para que não apareça novamente ao atualizar
+    unset($_SESSION['success_message']);
+}
+
+// Buscar informações do usuário a ser editado
+$sql_user = "SELECT nomeutilizador, mail FROM utilizador WHERE id_utilizador = '$edit_user_id'";
+$result_user = mysqli_query($conn, $sql_user);
+
+if (!$result_user) {
+    echo "<script>alert('Erro ao buscar informações do usuário: " . mysqli_error($conn) . "');</script>";
+} else {
+    $user_data = mysqli_fetch_assoc($result_user);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_username = trim($_POST['new_username']);
-    $password = trim($_POST['password']);
+    $new_email = trim($_POST['new_email']);
 
     // Remove caracteres perigosos (proteção básica)
     $new_username = str_replace(["'", '"', ";", "--"], "", $new_username);
-    $password = str_replace(["'", '"', ";", "--"], "", $password);
+    $new_email = str_replace(["'", '"', ";", "--"], "", $new_email);
 
-    // Verifica se os campos foram preenchidos
-    if (empty($new_username) || empty($password)) {
-        echo "<script>alert('Preencha todos os campos.'); window.location.href='edita_perfil_admin.php';</script>";
-        exit();
+    // Prepara a query de atualização
+    $updates = [];
+    if (!empty($new_username)) {
+        $updates[] = "nomeutilizador = '$new_username'";
     }
-
-    // Aplica MD5 à password inserida pelo utilizador
-    $password_hashed = md5($password);
-
-    // Verifica se a password está correta
-    $sql_check = "SELECT password FROM utilizador WHERE id_utilizador = '$user_id'";
-    $result = mysqli_query($conn, $sql_check);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-
-        if ($password_hashed === $row['password']) {
-            // Atualiza o nome de utilizador no banco de dados
-            $sql_update = "UPDATE utilizador SET nomeutilizador = '$new_username' WHERE id_utilizador = '$user_id'";
-            if (mysqli_query($conn, $sql_update)) {
-                echo "<script>alert('Nome alterado com sucesso.'); window.location.href='menu_admin.php';</script>";
-                exit();
+    if (!empty($new_email)) {
+        $updates[] = "mail = '$new_email'";
+    }
+    
+    if (!empty($updates)) {
+        $sql_update = "UPDATE utilizador SET " . implode(", ", $updates) . " WHERE id_utilizador = '$edit_user_id'";
+        if (mysqli_query($conn, $sql_update)) {
+            if ($is_editing_collaborator) {
+                $_SESSION['success_message'] = "Perfil do colaborador atualizado com sucesso!";
             } else {
-                echo "<script>alert('Erro ao alterar o nome.'); window.location.href='edita_perfil_admin.php';</script>";
-                exit();
+                $_SESSION['success_message'] = "Seu perfil foi atualizado com sucesso!";
             }
         } else {
-            echo "<script>alert('Password incorreta.'); window.location.href='edita_perfil_admin.php';</script>";
-            exit();
+            $_SESSION['success_message'] = "Erro ao atualizar o perfil: " . mysqli_error($conn);
         }
     } else {
-        echo "<script>alert('Erro ao verificar a password.'); window.location.href='edita_perfil_admin.php';</script>";
-        exit();
+        $_SESSION['success_message'] = "Nenhuma alteração foi feita.";
     }
+    
+    // Redirecionar para a mesma página para evitar reenvio do formulário ao atualizar
+    header("Location: edita_perfil_admin.php" . ($is_editing_collaborator ? "?id=$edit_user_id" : ""));
+    exit();
 }
 
 mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil</title>
+    <title><?php echo $is_editing_collaborator ? 'Editar Perfil do Colaborador' : 'Editar Perfil'; ?></title>
     <link rel="stylesheet" href="casos_gerais_admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -65,7 +125,6 @@ mysqli_close($conn);
 </head>
 
 <body>
-
     <header>
         <div class="header-container">
             <a href="menu_admin.php">
@@ -89,28 +148,35 @@ mysqli_close($conn);
     </header>
 
     <div class="main-content">
-      <div class="login-container">
-        <form action="edita_perfil_admin.php" method="POST">
-            <!-- Campo para o novo nome de utilizador -->
-            <div class="form-group">
-                <i class="fa fa-user input-icon"></i>
-                <input type="text" id="new_username" name="new_username" placeholder="Novo Nome de Utilizador" required>
+        <div class="profile-container">
+            <div class="profile-icon">
+                <i class="fas fa-user-circle"></i>
             </div>
-
-            <!-- Campo para confirmação da password -->
-            <div class="form-group">
-                <i class="fa fa-lock input-icon"></i>
-                <input type="password" id="password" name="password" placeholder="Digite sua Password" required>
-            </div>
-
-            <!-- Botão para submeter o formulário -->
-            <button type="submit">Alterar Nome de Utilizador</button>
-        </form>
-      </div>
+            
+            <?php if ($is_editing_collaborator): ?>
+                <div class="editing-collaborator">
+                    <h3>Editando perfil do colaborador</h3>
+                </div>
+            <?php endif; ?>
+            
+            <form action="<?php echo "edita_perfil_admin.php" . ($is_editing_collaborator ? "?id=$edit_user_id" : ""); ?>" method="POST">
+                <div class="form-title">NOME DE UTILIZADOR <i class="fas fa-info-circle"></i></div>
+                <div class="profile-input-container">
+                    <input type="text" name="new_username" class="profile-input" placeholder="INSIRA O NOVO NOME DE UTILIZADOR" value="<?php echo isset($user_data['nomeutilizador']) ? $user_data['nomeutilizador'] : ''; ?>">
+                </div>
+                
+                <div class="form-title">E-MAIL <i class="fas fa-info-circle"></i></div>
+                <div class="profile-input-container">
+                    <input type="email" name="new_email" class="profile-input" placeholder="INSIRA O NOVO E-MAIL" value="<?php echo isset($user_data['mail']) ? $user_data['mail'] : ''; ?>">
+                </div>
+                
+                <button type="submit" class="submit-button">SUBMETER</button>
+            </form>
+        </div>
     </div>
-
-    <div class = "main-content2">
-      <a href="menu_admin.php">
+    
+    <div class="main-content2">
+      <a href="<?php echo $is_editing_collaborator ? 'procura_colaborador.php' : 'menu_admin.php'; ?>">
         <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
       </a>
     </div>
@@ -131,7 +197,15 @@ mysqli_close($conn);
       </div> 
       <p class="copyright">© 2025 Todos os direitos reservados.</p> 
     </footer>
-
+    
+    <?php if (!empty($success_message)): ?>
+    <script>
+        // Exibe o alerta após o carregamento da página
+        window.onload = function() {
+            alert("<?php echo $success_message; ?>");
+        }
+    </script>
+    <?php endif; ?>
 </body>
 
 </html>

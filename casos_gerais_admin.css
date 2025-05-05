@@ -168,3 +168,84 @@ footer {
         gap: 10px;
     }
 }
+
+/* Estilos para o formulário de edição de perfil */
+.profile-container {
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-icon {
+    font-size: 3rem;
+    color: #5271ff;
+    margin-bottom: 20px;
+}
+
+.form-title {
+    color: #5271ff;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-title i {
+    margin-left: 5px;
+    font-size: 0.8rem;
+}
+
+.profile-input-container {
+    background-color: #5271ff;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.profile-input::placeholder {
+    color: white;
+    opacity: 0.9;
+}
+
+.profile-input:focus {
+    outline: none;
+}
+
+.submit-button {
+    background-color: #5271ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 30px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submit-button:hover {
+    background-color: #4056d6;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
