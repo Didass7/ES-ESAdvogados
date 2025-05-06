@@ -14,34 +14,39 @@ if ($result_metodos && mysqli_num_rows($result_metodos) > 0) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verificar se o usuário está logado
     if (!isset($_SESSION['id_utilizador'])) {
         echo "<script>alert('Sessão expirada. Faça login novamente.'); window.location.href = 'login.php';</script>";
         exit;
     }
 
     $id_colaborador = $_SESSION['id_utilizador'];
-
-    // Validação e sanitização dos inputs
-    $nome = mysqli_real_escape_string($conn, $_POST['nome'] ?? '');
-    $dataNasc = mysqli_real_escape_string($conn, $_POST['nascimento'] ?? '');
-    $nif = mysqli_real_escape_string($conn, $_POST['nif'] ?? '');
-    $contacto1 = mysqli_real_escape_string($conn, $_POST['contacto1'] ?? '');
-    $contacto2 = mysqli_real_escape_string($conn, $_POST['contacto2'] ?? '');
-    $morada = mysqli_real_escape_string($conn, $_POST['morada'] ?? '');
-    $endereco_faturacao = mysqli_real_escape_string($conn, $_POST['endereco_faturacao'] ?? '');
-    $pagamento = mysqli_real_escape_string($conn, $_POST['pagamento'] ?? '');
-
-    // Usar prepared statement para evitar SQL injection
-    $stmt = $conn->prepare("INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssssi", $nome, $dataNasc, $nif, $contacto1, $contacto2, $morada, $endereco_faturacao, $pagamento, $id_colaborador);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Novo cliente registado com sucesso'); window.location.href = 'menu_colaborador.php';</script>";
+    
+    // Obter dados do formulário com verificação
+    $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
+    $dataNasc = isset($_POST['nascimento']) ? $_POST['nascimento'] : '';
+    $nif = isset($_POST['nif']) ? $_POST['nif'] : '';
+    $contacto1 = isset($_POST['contacto1']) ? $_POST['contacto1'] : '';
+    $contacto2 = isset($_POST['contacto2']) ? $_POST['contacto2'] : '';
+    $morada = isset($_POST['morada']) ? $_POST['morada'] : '';
+    $endereco_faturacao = isset($_POST['endereco_faturacao']) ? $_POST['endereco_faturacao'] : '';
+    $pagamento = isset($_POST['pagamento']) ? $_POST['pagamento'] : '';
+    
+    // Verificar se os campos obrigatórios estão preenchidos
+    if (empty($nome) || empty($dataNasc) || empty($nif) || empty($contacto1) || 
+        empty($morada) || empty($endereco_faturacao) || empty($pagamento)) {
+        echo "<script>alert('Por favor, preencha todos os campos obrigatórios.');</script>";
     } else {
-        echo "<script>alert('Erro ao registar cliente: " . $stmt->error . "'); window.location.href = 'cria_cliente.php';</script>";
+        // Inserir na base de dados
+        $sql = "INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador) 
+                VALUES ('$nome', '$dataNasc', '$nif', '$contacto1', '$contacto2', '$morada', '$endereco_faturacao', '$pagamento', $id_colaborador)";
+        
+        if (mysqli_query($conn, $sql)) {
+            echo "<script>alert('Cliente registado com sucesso!'); window.location.href = 'menu_colaborador.php';</script>";
+        } else {
+            echo "<script>alert('Erro ao registar cliente: " . mysqli_error($conn) . "');</script>";
+        }
     }
-    $stmt->close();
 }
 
 $conn->close();
@@ -126,18 +131,18 @@ $conn->close();
       <div>
         <label style="font-weight: bold; color: #5271ff;">PAGAMENTO</label><br>
         <select name="pagamento" required>
-          <option value="" disabled selected style = "font-weight: bold; color: white;">SELECIONE UM MÉTODO</option>
-          <?php foreach ($metodos_pagamento as $metodo): ?>
-            <option value="<?= $metodo['id_metodo'] ?>"><?= htmlspecialchars($metodo['metodo']) ?></option>
-          <?php endforeach; ?>
+          <option value="" disabled selected>SELECIONE UM MÉTODO</option>
+          <option value="1">Transferência Bancária</option>
+          <option value="2">Multibanco</option>
+          <option value="3">MBWay</option>
+          <option value="4">Dinheiro</option>
         </select>
       </div>
-    </form>
-    <form action="cria_cliente.php" method="POST">
+      
       <div style="grid-column: span 2; text-align: center; margin-top: 20px;">
-          <button type="submit" style="background-color: white; color: #5271ff; border: 2px solid #5271ff; padding: 12px 40px; border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer;">
-            SUBMETER
-          </button>
+        <button type="submit" style="background-color: white; color: #5271ff; border: 2px solid #5271ff; padding: 12px 40px; border-radius: 30px; font-weight: bold; font-size: 1rem; cursor: pointer;">
+          SUBMETER
+        </button>
       </div>
     </form>
   </main>
