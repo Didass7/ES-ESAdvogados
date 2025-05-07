@@ -3,6 +3,12 @@ session_start();
 include 'basedados.h';
 
 // Verificar se o usuário está logado
+if (!isset($_SESSION['user_id']) && isset($_SESSION['id_utilizador'])) {
+    // Se user_id não existe mas id_utilizador existe, use id_utilizador
+    $_SESSION['user_id'] = $_SESSION['id_utilizador'];
+}
+
+// Verificar novamente após a correção
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();

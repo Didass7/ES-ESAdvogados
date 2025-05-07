@@ -242,28 +242,28 @@ mysqli_close($conn);
                     <!-- Informações pessoais -->
                     <div class="form-group">
                         <label for="nome">Nome *</label>
-                        <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($cliente_data['nome']); ?>" required>
+                        <input type="text" id="nome" name="nome" value="<?php echo $cliente_data['nome']; ?>" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="nascimento">Data de Nascimento *</label>
-                        <input type="date" id="nascimento" name="nascimento" value="<?php echo htmlspecialchars($cliente_data['dataNasci']); ?>" required>
+                        <input type="date" id="nascimento" name="nascimento" value="<?php echo $cliente_data['dataNasci']; ?>" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="nif">NIF *</label>
-                        <input type="text" id="nif" name="nif" value="<?php echo htmlspecialchars($cliente_data['nif']); ?>" maxlength="9" required>
+                        <input type="text" id="nif" name="nif" value="<?php echo $cliente_data['nif']; ?>" maxlength="9" required>
                     </div>
                     
                     <!-- Informações de contato -->
                     <div class="form-group">
                         <label for="contacto1">Contacto Principal *</label>
-                        <input type="text" id="contacto1" name="contacto1" value="<?php echo htmlspecialchars($cliente_data['contacto1']); ?>" maxlength="9" required>
+                        <input type="text" id="contacto1" name="contacto1" value="<?php echo $cliente_data['contacto1']; ?>" maxlength="9" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="contacto2">Contacto Secundário</label>
-                        <input type="text" id="contacto2" name="contacto2" value="<?php echo htmlspecialchars($cliente_data['contacto2']); ?>" maxlength="9">
+                        <input type="text" id="contacto2" name="contacto2" value="<?php echo $cliente_data['contacto2']; ?>" maxlength="9">
                     </div>
                     
                     <!-- Método de pagamento -->
@@ -275,7 +275,7 @@ mysqli_close($conn);
                             for ($i = 0; $i < count($metodos_pagamento); $i++) {
                                 $selected = ($cliente_data['pagamento'] == $metodos_pagamento[$i]['id_metodo']) ? 'selected' : '';
                                 echo "<option value='" . $metodos_pagamento[$i]['id_metodo'] . "' $selected>" . 
-                                     htmlspecialchars($metodos_pagamento[$i]['metodo']) . "</option>";
+                                     $metodos_pagamento[$i]['metodo'] . "</option>";
                             }
                             ?>
                         </select>
@@ -285,19 +285,19 @@ mysqli_close($conn);
                 <!-- Endereços -->
                 <div class="form-group">
                     <label for="morada">Morada *</label>
-                    <input type="text" id="morada" name="morada" value="<?php echo htmlspecialchars($cliente_data['morada']); ?>" required>
+                    <input type="text" id="morada" name="morada" value="<?php echo $cliente_data['morada']; ?>" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="endereco_faturacao">Endereço de Faturação *</label>
                     <input type="text" id="endereco_faturacao" name="endereco_faturacao" 
-                           value="<?php echo htmlspecialchars($cliente_data['endereco_faturacao']); ?>" required>
+                           value="<?php echo $cliente_data['endereco_faturacao']; ?>" required>
                 </div>
                 
                 <!-- Botões de ação -->
                 <div class="form-buttons">
                     <button type="submit" class="submit-button">Salvar Alterações</button>
-                    <a href="consultar_cliente.php?id=<?php echo $id_cliente; ?>" class="cancel-button">Cancelar</a>
+                    <a href="gerir_cliente.php?id=<?php echo $id_cliente; ?>" class="cancel-button">Cancelar</a>
                 </div>
             </form>
         </div>
