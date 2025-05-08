@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include 'basedados.h';
 
@@ -15,9 +14,10 @@ $mensagem = "";
 $cliente_data = null;
 $metodos_pagamento = [];
 $id_cliente = 0;
+$clientes = [];
 
 // Verificar se um ID de cliente foi fornecido
-if (isset($_GET['id'])) {
+if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id_cliente = intval($_GET['id']);
     
     // Buscar informações do cliente
@@ -26,73 +26,112 @@ if (isset($_GET['id'])) {
     
     if ($result && mysqli_num_rows($result) > 0) {
         $cliente_data = mysqli_fetch_assoc($result);
+        
+        // Buscar métodos de pagamento disponíveis
+        $sql_pagamentos = "SELECT * FROM metodopagamento";
+        $result_pagamentos = mysqli_query($conn, $sql_pagamentos);
+        
+        if ($result_pagamentos && mysqli_num_rows($result_pagamentos) > 0) {
+            $metodos_pagamento = mysqli_fetch_all($result_pagamentos, MYSQLI_ASSOC);
+        }
     } else {
-        echo "<script>alert('Cliente não encontrado.'); window.location.href = 'consultar_cliente.php';</script>";
+        echo "<script>alert('Cliente não encontrado.'); window.location.href = 'gerir_cliente.php';</script>";
         exit;
     }
+} else {
+    // Se não foi fornecido um ID, buscar todos os clientes para o dropdown
+    $sql_clientes = "SELECT id_cliente, nome, nif FROM cliente ORDER BY nome";
+    $result_clientes = mysqli_query($conn, $sql_clientes);
     
-    // Buscar métodos de pagamento disponíveis
+    if ($result_clientes && mysqli_num_rows($result_clientes) > 0) {
+        while ($row = mysqli_fetch_assoc($result_clientes)) {
+            $clientes[] = $row;
+        }
+    } else {
+        $mensagem = "Nenhum cliente encontrado no sistema.";
+    }
+    
+    // Buscar métodos de pagamento disponíveis (para o caso de seleção de cliente)
     $sql_pagamentos = "SELECT * FROM metodopagamento";
     $result_pagamentos = mysqli_query($conn, $sql_pagamentos);
     
     if ($result_pagamentos && mysqli_num_rows($result_pagamentos) > 0) {
         $metodos_pagamento = mysqli_fetch_all($result_pagamentos, MYSQLI_ASSOC);
     }
-} else {
-    echo "<script>alert('ID do cliente não fornecido.'); window.location.href = 'consultar_cliente.php';</script>";
-    exit;
 }
 
 // Processar o formulário quando enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obter e sanitizar dados do formulário
-    $nome = isset($_POST['nome']) ? mysqli_real_escape_string($conn, $_POST['nome']) : '';
-    $dataNasc = isset($_POST['nascimento']) ? $_POST['nascimento'] : '';
-    $nif = isset($_POST['nif']) ? mysqli_real_escape_string($conn, $_POST['nif']) : '';
-    $contacto1 = isset($_POST['contacto1']) ? mysqli_real_escape_string($conn, $_POST['contacto1']) : '';
-    $contacto2 = isset($_POST['contacto2']) ? mysqli_real_escape_string($conn, $_POST['contacto2']) : '';
-    $morada = isset($_POST['morada']) ? mysqli_real_escape_string($conn, $_POST['morada']) : '';
-    $endereco_faturacao = isset($_POST['endereco_faturacao']) ? mysqli_real_escape_string($conn, $_POST['endereco_faturacao']) : '';
-    $pagamento = isset($_POST['pagamento']) ? intval($_POST['pagamento']) : 0;
-    
-    // Validação de campos obrigatórios
-    $campos_obrigatorios = [
-        'nome' => $nome,
-        'data de nascimento' => $dataNasc,
-        'NIF' => $nif,
-        'contacto principal' => $contacto1,
-        'morada' => $morada,
-        'endereço de faturação' => $endereco_faturacao,
-        'método de pagamento' => $pagamento
-    ];
-    
-    $campos_vazios = [];
-    foreach ($campos_obrigatorios as $campo => $valor) {
-        if (empty($valor)) {
-            $campos_vazios[] = $campo;
-        }
-    }
-    
-    if (!empty($campos_vazios)) {
-        $mensagem = "Por favor, preencha os seguintes campos obrigatórios: " . implode(', ', $campos_vazios) . ".";
-    } else {
-        // Atualizar os dados do cliente
-        $sql_update = "UPDATE cliente SET 
-                      nome = '$nome', 
-                      dataNasci = '$dataNasc', 
-                      nif = '$nif', 
-                      contacto1 = '$contacto1', 
-                      contacto2 = '$contacto2', 
-                      morada = '$morada', 
-                      endereco_faturacao = '$endereco_faturacao', 
-                      pagamento = $pagamento 
-                      WHERE id_cliente = $id_cliente";
+    if (isset($_POST['selecionar_cliente'])) {
+        // Processar a seleção de cliente
+        $id_cliente_selecionado = isset($_POST['id_cliente']) ? intval($_POST['id_cliente']) : 0;
         
-        if (mysqli_query($conn, $sql_update)) {
-            echo "<script>alert('Cliente atualizado com sucesso!'); window.location.href = 'consultar_cliente.php?id=$id_cliente';</script>";
+        if ($id_cliente_selecionado > 0) {
+            // Redirecionar para a mesma página com o ID do cliente selecionado
+            header("Location: editar_cliente.php?id=$id_cliente_selecionado");
             exit;
         } else {
-            $mensagem = "Erro ao atualizar cliente: " . mysqli_error($conn);
+            $mensagem = "Por favor, selecione um cliente.";
+        }
+    } else {
+        // Processar a atualização do cliente
+        // Obter e sanitizar dados do formulário
+        $nome = isset($_POST['nome']) ? mysqli_real_escape_string($conn, $_POST['nome']) : '';
+        $dataNasc = isset($_POST['nascimento']) ? $_POST['nascimento'] : '';
+        $nif = isset($_POST['nif']) ? mysqli_real_escape_string($conn, $_POST['nif']) : '';
+        $contacto1 = isset($_POST['contacto1']) ? mysqli_real_escape_string($conn, $_POST['contacto1']) : '';
+        $contacto2 = isset($_POST['contacto2']) ? mysqli_real_escape_string($conn, $_POST['contacto2']) : '';
+        $morada = isset($_POST['morada']) ? mysqli_real_escape_string($conn, $_POST['morada']) : '';
+        $endereco_faturacao = isset($_POST['endereco_faturacao']) ? mysqli_real_escape_string($conn, $_POST['endereco_faturacao']) : '';
+        $pagamento = isset($_POST['pagamento']) ? intval($_POST['pagamento']) : 0;
+        
+        // Validação de campos obrigatórios
+        $campos_obrigatorios = [
+            'nome' => $nome,
+            'data de nascimento' => $dataNasc,
+            'NIF' => $nif,
+            'contacto principal' => $contacto1,
+            'morada' => $morada,
+            'endereço de faturação' => $endereco_faturacao,
+            'método de pagamento' => $pagamento
+        ];
+        
+        $campos_vazios = [];
+        foreach ($campos_obrigatorios as $campo => $valor) {
+            if (empty($valor)) {
+                $campos_vazios[] = $campo;
+            }
+        }
+        
+        if (!empty($campos_vazios)) {
+            $mensagem = "Por favor, preencha os seguintes campos obrigatórios: " . implode(', ', $campos_vazios) . ".";
+        } else {
+            // Verificar se o NIF já existe em outro cliente
+            $sql_check_nif = "SELECT id_cliente FROM cliente WHERE nif = '$nif' AND id_cliente != $id_cliente";
+            $result_check_nif = mysqli_query($conn, $sql_check_nif);
+            
+            if ($result_check_nif && mysqli_num_rows($result_check_nif) > 0) {
+                $mensagem = "Erro: O NIF '$nif' já está registado para outro cliente.";
+            } else {
+                // Atualizar os dados do cliente
+                $sql_update = "UPDATE cliente SET 
+                              nome = '$nome', 
+                              dataNasci = '$dataNasc', 
+                              nif = '$nif', 
+                              contacto1 = '$contacto1', 
+                              contacto2 = '$contacto2', 
+                              morada = '$morada', 
+                              endereco_faturacao = '$endereco_faturacao', 
+                              pagamento = $pagamento 
+                              WHERE id_cliente = $id_cliente";
+                
+                if (mysqli_query($conn, $sql_update)) {
+                    echo "<script>alert('Cliente atualizado com sucesso!'); window.location.href = 'consultar_cliente.php?id=$id_cliente';</script>";
+                    exit;
+                } else {
+                    $mensagem = "Erro ao atualizar cliente: " . mysqli_error($conn);
+                }
+            }
         }
     }
 }
@@ -117,6 +156,8 @@ mysqli_close($conn);
             padding: 20px;
             max-width: 900px;
             margin: 0 auto;
+            padding-top: 120px;
+            padding-bottom: 80px;
         }
         
         .form-container {
@@ -196,6 +237,31 @@ mysqli_close($conn);
             margin-bottom: 15px;
             font-weight: bold;
         }
+        
+        /* Estilo para o formulário de seleção de cliente */
+        .select-client-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .select-client-form select {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        /* Estilo para quando não há clientes */
+        .no-clients-message {
+            text-align: center;
+            margin: 20px 0;
+            color: #5271ff;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -236,70 +302,99 @@ mysqli_close($conn);
                 <div class="error-message"><?php echo $mensagem; ?></div>
             <?php endif; ?>
             
-            <!-- Formulário de edição -->
-            <form action="editar_cliente.php?id=<?php echo $id_cliente; ?>" method="POST">
-                <div class="form-grid">
-                    <!-- Informações pessoais -->
+            <?php if ($cliente_data === null): ?>
+                <!-- Formulário de seleção de cliente -->
+                <?php if (!empty($clientes)): ?>
+                    <form action="editar_cliente.php" method="POST" class="select-client-form">
+                        <div class="form-group" style="width: 100%;">
+                            <label for="id_cliente">Selecione um Cliente para Editar</label>
+                            <select id="id_cliente" name="id_cliente" required>
+                                <option value="">-- Selecione um cliente --</option>
+                                <?php foreach ($clientes as $cliente): ?>
+                                    <option value="<?php echo $cliente['id_cliente']; ?>">
+                                        <?php echo $cliente['nome'] . ' (NIF: ' . $cliente['nif'] . ')'; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit" name="selecionar_cliente" class="submit-button">Selecionar</button>
+                            <a href="gerir_cliente.php" class="cancel-button">Cancelar</a>
+                        </div>
+                    </form>
+                <?php else: ?>
+                    <div class="no-clients-message">
+                        <p>Não há clientes cadastrados no sistema.</p>
+                        <div class="form-buttons">
+                            <a href="cria_cliente.php" class="submit-button">Criar Cliente</a>
+                            <a href="gerir_cliente.php" class="cancel-button">Voltar</a>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php else: ?>
+                <!-- Formulário de edição -->
+                <form action="editar_cliente.php?id=<?php echo $id_cliente; ?>" method="POST">
+                    <div class="form-grid">
+                        <!-- Informações pessoais -->
+                        <div class="form-group">
+                            <label for="nome">Nome *</label>
+                            <input type="text" id="nome" name="nome" value="<?php echo $cliente_data['nome']; ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nascimento">Data de Nascimento *</label>
+                            <input type="date" id="nascimento" name="nascimento" value="<?php echo $cliente_data['dataNasci']; ?>" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nif">NIF *</label>
+                            <input type="text" id="nif" name="nif" value="<?php echo $cliente_data['nif']; ?>" maxlength="9" required>
+                        </div>
+                        
+                        <!-- Informações de contato -->
+                        <div class="form-group">
+                            <label for="contacto1">Contacto Principal *</label>
+                            <input type="text" id="contacto1" name="contacto1" value="<?php echo $cliente_data['contacto1']; ?>" maxlength="9" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contacto2">Contacto Secundário</label>
+                            <input type="text" id="contacto2" name="contacto2" value="<?php echo $cliente_data['contacto2']; ?>" maxlength="9">
+                        </div>
+                        
+                        <!-- Método de pagamento -->
+                        <div class="form-group">
+                            <label for="pagamento">Método de Pagamento *</label>
+                            <select id="pagamento" name="pagamento" required>
+                                <option value="">Selecione um método</option>
+                                <?php foreach ($metodos_pagamento as $metodo): ?>
+                                    <option value="<?php echo $metodo['id_metodo']; ?>" <?php echo ($cliente_data['pagamento'] == $metodo['id_metodo']) ? 'selected' : ''; ?>>
+                                        <?php echo $metodo['metodo']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Endereços -->
                     <div class="form-group">
-                        <label for="nome">Nome *</label>
-                        <input type="text" id="nome" name="nome" value="<?php echo $cliente_data['nome']; ?>" required>
+                        <label for="morada">Morada *</label>
+                        <input type="text" id="morada" name="morada" value="<?php echo $cliente_data['morada']; ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="nascimento">Data de Nascimento *</label>
-                        <input type="date" id="nascimento" name="nascimento" value="<?php echo $cliente_data['dataNasci']; ?>" required>
+                        <label for="endereco_faturacao">Endereço de Faturação *</label>
+                        <input type="text" id="endereco_faturacao" name="endereco_faturacao" 
+                               value="<?php echo $cliente_data['endereco_faturacao']; ?>" required>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="nif">NIF *</label>
-                        <input type="text" id="nif" name="nif" value="<?php echo $cliente_data['nif']; ?>" maxlength="9" required>
+                    <!-- Botões de ação -->
+                    <div class="form-buttons">
+                        <button type="submit" class="submit-button">Salvar Alterações</button>
+                        <a href="editar_cliente.php?id=<?php echo $id_cliente; ?>" class="cancel-button">Cancelar</a>
                     </div>
-                    
-                    <!-- Informações de contato -->
-                    <div class="form-group">
-                        <label for="contacto1">Contacto Principal *</label>
-                        <input type="text" id="contacto1" name="contacto1" value="<?php echo $cliente_data['contacto1']; ?>" maxlength="9" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contacto2">Contacto Secundário</label>
-                        <input type="text" id="contacto2" name="contacto2" value="<?php echo $cliente_data['contacto2']; ?>" maxlength="9">
-                    </div>
-                    
-                    <!-- Método de pagamento -->
-                    <div class="form-group">
-                        <label for="pagamento">Método de Pagamento *</label>
-                        <select id="pagamento" name="pagamento" required>
-                            <option value="">Selecione um método</option>
-                            <?php 
-                            for ($i = 0; $i < count($metodos_pagamento); $i++) {
-                                $selected = ($cliente_data['pagamento'] == $metodos_pagamento[$i]['id_metodo']) ? 'selected' : '';
-                                echo "<option value='" . $metodos_pagamento[$i]['id_metodo'] . "' $selected>" . 
-                                     $metodos_pagamento[$i]['metodo'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Endereços -->
-                <div class="form-group">
-                    <label for="morada">Morada *</label>
-                    <input type="text" id="morada" name="morada" value="<?php echo $cliente_data['morada']; ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="endereco_faturacao">Endereço de Faturação *</label>
-                    <input type="text" id="endereco_faturacao" name="endereco_faturacao" 
-                           value="<?php echo $cliente_data['endereco_faturacao']; ?>" required>
-                </div>
-                
-                <!-- Botões de ação -->
-                <div class="form-buttons">
-                    <button type="submit" class="submit-button">Salvar Alterações</button>
-                    <a href="gerir_cliente.php?id=<?php echo $id_cliente; ?>" class="cancel-button">Cancelar</a>
-                </div>
-            </form>
+                </form>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -319,4 +414,4 @@ mysqli_close($conn);
       <p class="copyright">© 2025 Todos os direitos reservados.</p> 
     </footer>
 </body>
-
+</html>

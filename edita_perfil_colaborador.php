@@ -109,20 +109,161 @@ mysqli_close($conn);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #5271ff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: #5271ff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-container2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .menu-button {
+            background-color: white;
+            color: #5271ff;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-icon {
+            font-size: 3rem;
+            color: #5271ff;
+            margin-bottom: 20px;
+        }
+        
+        .form-title {
+            color: #5271ff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-input-container {
+            background-color: #5271ff;
+            border-radius: 20px;
+            padding: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .profile-input {
+            width: 90%;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            color: white;
+            text-align: center;
+        }
+        
+        .profile-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .submit-button {
+            background-color: #5271ff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        footer {
+            background-color: white;
+            padding: 15px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-images {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .footer-images img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .copyright {
+            color: #5271ff;
+            font-size: 0.8rem;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
-
     <header>
         <div class="header-container">
             <a href="pagina-inicial.php">
-                <img src="logo.png" alt="Logotipo" class="logo">
+                <img src="logo.png" alt="Logotipo" class="logo" style="width: 40px; height: 40px;">
             </a>
         </div>
         <div class="header-container2">
-
             <a href="muda_password_colaborador.php">
               <button class="menu-button">MUDAR PASSWORD</button>
+            </a>
+
+            <a href="edita_perfil_colaborador.php">
+              <button class="menu-button">EDITAR PERFIL</button>
             </a>
 
             <a href="logout.php">
@@ -131,8 +272,12 @@ mysqli_close($conn);
 
             <button class="menu-button">
               COLABORADOR
-              <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
+              <img src="person.png" alt="Ícone" style="width: 20px; height: 20px; vertical-align: middle;">
             </button>
+            
+            <a href="menu_colaborador.php">
+              <img src="seta.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
+            </a>
         </div>
     </header>
 
@@ -156,12 +301,6 @@ mysqli_close($conn);
                 <button type="submit" class="submit-button">SUBMETER</button>
             </form>
         </div>
-    </div>
-
-    <div class = "main-content2">
-      <a href="menu_colaborador.php">
-        <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
-      </a>
     </div>
 
     <footer>
@@ -189,7 +328,5 @@ mysqli_close($conn);
         }
     </script>
     <?php endif; ?>
-
 </body>
-
 </html>
