@@ -2,11 +2,21 @@
     
     include 'basedados.h';
 
+    // Verificar se a conexão foi estabelecida
+    if (!$conn) {
+        die("Erro ao conectar à base de dados: " . mysqli_connect_error());
+    }
+
     // Obter a lista de casos associados aos clientes
     $query = "SELECT cj.id, cj.titulo, cj.descricao, cj.estado, cj.data_fechamento, c.nome AS cliente_nome 
               FROM casos_juridicos cj
               JOIN cliente c ON cj.id_cliente = c.id_cliente";
     $result = mysqli_query($conn, $query);
+
+    // Verificar se a consulta foi bem-sucedida
+    if (!$result) {
+        die("Erro ao obter a lista de casos: " . mysqli_error($conn));
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alterar_estado'])) {
         $id_caso = $_POST['id_caso'];
@@ -16,7 +26,7 @@
         $query = "UPDATE casos_juridicos SET estado = '$novo_estado' WHERE id = $id_caso";
         mysqli_query($conn, $query);
 
-        // Atualizar a data de fechamento apenas se o estado for "terminado"
+        // Atualizar a data de fecho apenas se o estado for "terminado"
         if ($novo_estado === 'terminado') {
             $data_fechamento = date('Y-m-d');
             $query = "UPDATE casos_juridicos SET data_fechamento = '$data_fechamento' WHERE id = $id_caso";
@@ -30,7 +40,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +52,6 @@
 </head>
 
 <body>
-
     <header>
         <div class="header-container">
             <a href="menu_colaborador.php">
@@ -80,29 +89,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                    <?php if (mysqli_num_rows($result) > 0): ?>
+                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            <tr>
+                                <td><?= $row['titulo'] ?></td>
+                                <td><?= $row['descricao'] ?></td>
+                                <td><?= $row['cliente_nome'] ?></td>
+                                <td><?= $row['estado'] ?></td>
+                                <td><?= $row['data_fechamento'] ?? 'N/A' ?></td>
+                                <td>
+                                    <?php if ($row['estado'] !== 'terminado'): ?>
+                                        <form method="POST" style="display: inline;">
+                                            <input type="hidden" name="id_caso" value="<?= $row['id'] ?>">
+                                            <select name="novo_estado" required>
+                                                <option value="aberto" <?= $row['estado'] === 'aberto' ? 'selected' : '' ?>>Aberto</option>
+                                                <option value="fechado" <?= $row['estado'] === 'fechado' ? 'selected' : '' ?>>Fechado</option>
+                                                <option value="terminado" <?= $row['estado'] === 'terminado' ? 'selected' : '' ?>>Terminado</option>
+                                            </select>
+                                            <button type="submit" name="alterar_estado">Alterar</button>
+                                        </form>
+                                    <?php endif; ?>
+                                    <a href="apagar_caso.php?id=<?= $row['id'] ?>" class="delete-button" onclick="return confirm('Tem a certeza que deseja apagar este caso?')">Apagar</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
                         <tr>
-                            <td><?= $row['titulo'] ?></td>
-                            <td><?= $row['descricao'] ?></td>
-                            <td><?= $row['cliente_nome'] ?></td>
-                            <td><?= $row['estado'] ?></td>
-                            <td><?= $row['data_fechamento'] ?? 'N/A' ?></td>
-                            <td>
-                                <?php if ($row['estado'] !== 'terminado'): ?>
-                                    <form method="POST" style="display: inline;">
-                                        <input type="hidden" name="id_caso" value="<?= $row['id'] ?>">
-                                        <select name="novo_estado" required>
-                                            <option value="aberto" <?= $row['estado'] === 'aberto' ? 'selected' : '' ?>>Aberto</option>
-                                            <option value="fechado" <?= $row['estado'] === 'fechado' ? 'selected' : '' ?>>Fechado</option>
-                                            <option value="terminado" <?= $row['estado'] === 'terminado' ? 'selected' : '' ?>>Terminado</option>
-                                        </select>
-                                        <button type="submit" name="alterar_estado">Alterar</button>
-                                    </form>
-                                <?php endif; ?>
-                                <a href="apagar_caso.php?id=<?= $row['id'] ?>" class="delete-button" onclick="return confirm('Tem certeza que deseja apagar este caso?')">Apagar</a>
-                            </td>
+                            <td colspan="6" style="text-align: center;">Nenhum caso encontrado.</td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
