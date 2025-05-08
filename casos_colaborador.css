@@ -11,9 +11,7 @@ body {
     background-color: #5271ff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Usar min-height em vez de height para conteúdo longo */
+    min-height: 100vh; /* Garante que o body ocupe toda a altura da janela */
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden; /* Só esconder overflow horizontal */
@@ -104,7 +102,8 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
-    margin: 80px auto; /* Centraliza o formulário verticalmente */
+    margin: 80px auto 100px auto; /* Adiciona margem inferior para o footer */
+    flex: 1 0 auto; /* Permite que o conteúdo cresça, mas não encolha */
 }
 
 h1 {
@@ -155,8 +154,10 @@ footer {
     padding: 10px 0;
     color: #666;
     font-size: 0.9rem;
-    margin-top: 10px; /* Espaço entre o conteúdo e o rodapé */
-    position: relative; /* Remove o comportamento fixo */
+    margin-top: auto; /* Empurra o footer para o final da página */
+    position: relative; /* Não fixo */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* Impede que o footer encolha */
 }
 
 .footer-images {

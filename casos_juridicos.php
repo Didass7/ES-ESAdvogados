@@ -52,6 +52,10 @@
       <a href="registar_atividade.php">
         <button class="menu-button2">REGISTAR ATIVIDADE</button>
       </a>
+      
+      <a href="consultar_faturacao.php">
+        <button class="menu-button2">CONSULTAR FATURAÇÃO</button>
+      </a>
     </div>
 
     <footer>
