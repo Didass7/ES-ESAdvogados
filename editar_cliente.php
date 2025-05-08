@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               WHERE id_cliente = $id_cliente";
                 
                 if (mysqli_query($conn, $sql_update)) {
-                    echo "<script>alert('Cliente atualizado com sucesso!'); window.location.href = 'consultar_cliente.php?id=$id_cliente';</script>";
+                    echo "<script>alert('Cliente atualizado com sucesso!'); window.location.href = 'gerir_cliente.php?id=$id_cliente';</script>";
                     exit;
                 } else {
                     $mensagem = "Erro ao atualizar cliente: " . mysqli_error($conn);
@@ -391,7 +391,7 @@ mysqli_close($conn);
                     <!-- Botões de ação -->
                     <div class="form-buttons">
                         <button type="submit" class="submit-button">Salvar Alterações</button>
-                        <a href="editar_cliente.php?id=<?php echo $id_cliente; ?>" class="cancel-button">Cancelar</a>
+                        <a href="gerir_cliente.php?id=<?php echo $id_cliente; ?>" class="cancel-button">Cancelar</a>
                     </div>
                 </form>
             <?php endif; ?>
