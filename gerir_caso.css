@@ -203,7 +203,7 @@ footer {
 }
 
 /* Botões */
-button, .delete-button {
+button, .delete-button, .view-button {
     background-color: #5271ff;
     color: white;
     border: none;
@@ -213,10 +213,28 @@ button, .delete-button {
     font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: inline-block;
+    margin: 2px;
 }
 
-button:hover, .delete-button:hover {
+button:hover, .delete-button:hover, .view-button:hover {
     background-color: #4056d6;
+}
+
+.view-button {
+    background-color: #28a745;
+}
+
+.view-button:hover {
+    background-color: #218838;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
 }
 
 select {
@@ -232,12 +250,12 @@ select {
         padding: 8px 30px;
         font-size: 1.2rem;
     }
-    
+
     .logo {
         width: 50px;
         height: 50px;
     }
-    
+
     .footer-images img {
         width: 35px;
         height: 35px;
@@ -248,12 +266,12 @@ select {
     header {
         padding: 15px 10px;
     }
-    
+
     .login-button {
         padding: 6px 20px;
         font-size: 1rem;
     }
-    
+
     .footer-images {
         gap: 10px;
     }

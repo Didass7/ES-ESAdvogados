@@ -1,5 +1,5 @@
 <?php
-    
+
     include 'basedados.h';
 
     // Verificar se a conexão foi estabelecida
@@ -8,7 +8,7 @@
     }
 
     // Obter a lista de casos associados aos clientes
-    $query = "SELECT cj.id, cj.titulo, cj.descricao, cj.estado, cj.data_fechamento, c.nome AS cliente_nome 
+    $query = "SELECT cj.id, cj.titulo, cj.descricao, cj.estado, cj.data_fechamento, c.nome AS cliente_nome
               FROM casos_juridicos cj
               JOIN cliente c ON cj.id_cliente = c.id_cliente";
     $result = mysqli_query($conn, $query);
@@ -109,6 +109,7 @@
                                             <button type="submit" name="alterar_estado">Alterar</button>
                                         </form>
                                     <?php endif; ?>
+                                    <a href="consultar_atividades.php?id=<?= $row['id'] ?>" class="view-button">Consultar Atividades</a>
                                     <a href="apagar_caso.php?id=<?= $row['id'] ?>" class="delete-button" onclick="return confirm('Tem a certeza que deseja apagar este caso?')">Apagar</a>
                                 </td>
                             </tr>
@@ -135,9 +136,9 @@
 
         <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" target="_blank">
           <img src="mail.png" alt="Imagem Mail">
-        </a>  
-      </div> 
-      <p class="copyright">© 2025 Todos os direitos reservados.</p> 
+        </a>
+      </div>
+      <p class="copyright">© 2025 Todos os direitos reservados.</p>
     </footer>
 
 </body>
