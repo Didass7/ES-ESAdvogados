@@ -84,7 +84,7 @@
                         <th>Descrição</th>
                         <th>Cliente</th>
                         <th>Estado</th>
-                        <th>Data Fecho</th>
+                        <th>Data Término</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
