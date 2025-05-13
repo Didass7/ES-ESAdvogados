@@ -66,6 +66,10 @@ if (!isset($_SESSION['id_utilizador'])) {
         <button class="menu-button2">CASOS JURÍDICOS</button>
       </a>
 
+      <a href="horas_trabalhadas.php">
+        <button class="menu-button2">REGISTAR HORAS TRABALHADAS</button>
+      </a>
+
       <a href="area_suporte.php">
         <button class="menu-button2">ÁREA DE SUPORTE</button>
       </a>
