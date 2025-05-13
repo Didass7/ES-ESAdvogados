@@ -144,6 +144,10 @@ mysqli_close($conn);
               ADMINISTRADOR
               <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
+
+             <a href="menu_admin.php">
+              <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
+            </a>
         </div>
     </header>
 
