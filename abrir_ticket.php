@@ -17,43 +17,36 @@ if (!isset($_SESSION['id_utilizador'])) {
     <title>Abrir Pedido</title>
     <link rel="stylesheet" href="menu_colaborador.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-
-        .main-content {
+        .contact-container {
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .main-content h1 {
+        .contact-container h1 {
             text-align: center;
             color: #004080;
             margin-bottom: 20px;
         }
 
-        .main-content p {
+        .contact-container p {
             text-align: center;
             color: #555;
             margin-bottom: 30px;
         }
 
-        .main-content form label {
+        .contact-container form label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
             color: #333;
         }
 
-        .main-content form input,
-        .main-content form textarea {
+        .contact-container form input,
+        .contact-container form textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -62,11 +55,11 @@ if (!isset($_SESSION['id_utilizador'])) {
             font-size: 14px;
         }
 
-        .main-content form textarea {
+        .contact-container form textarea {
             resize: none;
         }
 
-        .main-content form button {
+        .contact-container form button {
             background-color: #004080;
             color: white;
             border: none;
@@ -77,21 +70,18 @@ if (!isset($_SESSION['id_utilizador'])) {
             transition: background-color 0.3s ease;
         }
 
-        .main-content form button:hover {
+        .contact-container form button:hover {
             background-color: #003366;
         }
 
-        .header-container {
-            padding: 10px 20px;
-            background-color: #004080;
-            color: white;
-            display: flex;
-            justify-content: flex-start;
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        .header-container a .menu-button {
-            background-color: white;
-            color: #004080;
+        .back-button .menu-button {
+            background-color: #004080;
+            color: white;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
@@ -100,9 +90,8 @@ if (!isset($_SESSION['id_utilizador'])) {
             transition: background-color 0.3s ease;
         }
 
-        .header-container a .menu-button:hover {
+        .back-button .menu-button:hover {
             background-color: #003366;
-            color: white;
         }
     </style>
 </head>
@@ -117,7 +106,7 @@ if (!isset($_SESSION['id_utilizador'])) {
         </div>
     </header>
 
-    <div class="main-content">
+    <div class="contact-container">
         <h1>Abrir Pedido</h1>
         <p>Preencha o formulário abaixo para abrir um pedido de suporte:</p>
         <form action="envia_ticket.php" method="POST">
