@@ -63,6 +63,10 @@ if (!isset($_SESSION['id_utilizador'])) {
         <button class="menu-button2">EDITAR CLIENTE</button>
       </a>
 
+      <a href="consultar_saldo_cliente.php">
+        <button class="menu-button2">CONSULTAR SALDO</button>
+      </a>
+
       
     </div>
 
