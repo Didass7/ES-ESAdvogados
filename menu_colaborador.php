@@ -65,6 +65,10 @@ if (!isset($_SESSION['id_utilizador'])) {
       <a href="casos_juridicos.php">
         <button class="menu-button2">CASOS JURÍDICOS</button>
       </a>
+
+      <a href="area_suporte.php">
+        <button class="menu-button2">ÁREA DE SUPORTE</button>
+      </a>
     </div>
 
     <footer>
