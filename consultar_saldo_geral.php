@@ -418,7 +418,7 @@ if ($result_horas_recentes && mysqli_num_rows($result_horas_recentes) > 0) {
                                     <td><?php echo $cliente['nome']; ?></td>
                                     <td><?php echo number_format($cliente['total_faturado'], 2); ?> €</td>
                                     <td>
-                                        <a href="consultar_saldo_cliente.php?id=<?php echo $cliente['id_cliente']; ?>" class="btn">Ver Detalhes</a>
+                                        <a href="consultar_saldo_cliente_admin.php?id=<?php echo $cliente['id_cliente']; ?>" class="btn">Ver Detalhes</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -463,4 +463,64 @@ if ($result_horas_recentes && mysqli_num_rows($result_horas_recentes) > 0) {
                             <tr>
                                 <th>Data</th>
                                 <th>Cliente</th>
-                                <th>Process
+                                <th>Processo</th>
+                                <th>Valor</th>
+                                <th>Método de Pagamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($pagamentos_recentes as $pagamento): ?>
+                                <tr>
+                                    <td><?php echo $pagamento['data_pagamento']; ?></td>
+                                    <td><?php echo $pagamento['cliente_nome']; ?></td>
+                                    <td><?php echo $pagamento['caso_titulo']; ?></td>
+                                    <td><?php echo number_format($pagamento['valor'], 2); ?> €</td>
+                                    <td><?php echo $pagamento['metodo_pagamento']; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p>Nenhum pagamento registado no período selecionado.</p>
+                <?php endif; ?>
+            </div>
+            
+            <div id="horas" class="tab-content">
+                <h3>Horas Trabalhadas Recentes</h3>
+                <?php if (!empty($horas_recentes)): ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Colaborador</th>
+                                <th>Cliente</th>
+                                <th>Horas</th>
+                                <th>Valor/Hora</th>
+                                <th>Total</th>
+                                <th>Faturado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($horas_recentes as $hora): ?>
+                                <tr>
+                                    <td><?php echo $hora['data_registro']; ?></td>
+                                    <td><?php echo $hora['colaborador_nome']; ?></td>
+                                    <td><?php echo $hora['cliente_nome']; ?></td>
+                                    <td><?php echo number_format($hora['horas'], 2); ?> h</td>
+                                    <td><?php echo number_format($hora['valor_hora'], 2); ?> €</td>
+                                    <td><?php echo number_format($hora['horas'] * $hora['valor_hora'], 2); ?> €</td>
+                                    <td class="<?php echo $hora['faturado'] ? 'faturado' : 'nao-faturado'; ?>">
+                                        <?php echo $hora['faturado'] ? 'Sim' : 'Não'; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p>Nenhuma hora registada no período selecionado.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
