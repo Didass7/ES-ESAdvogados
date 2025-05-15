@@ -58,13 +58,51 @@ if (isset($_GET['nome']) && isset($_GET['mail'])) {
     </header>
 
     <div class="container mt-5">
-      <div class="info-box">
-          <h2 class="text-center">Informações do Colaborador</h2>
-          <p><strong>ID Utilizador:</strong> <?php echo $utilizador['id_utilizador']; ?></p>
-          <p><strong>Nome de Utilizador:</strong> <?php echo $utilizador['nomeUtilizador']; ?></p>
-          <p><strong>Email:</strong> <?php echo $utilizador['mail']; ?></p>
-      </div>
+        <div class="info-box">
+            <h2 class="text-center">Informações do Colaborador</h2>
+            <div class="info-content">
+                <p><strong>ID Utilizador:</strong> <?php echo $utilizador['id_utilizador']; ?></p>
+                <p><strong>Nome de Utilizador:</strong> <?php echo $utilizador['nomeUtilizador']; ?></p>
+                <p><strong>Email:</strong> <?php echo $utilizador['mail']; ?></p>
+            </div>
+        </div>
     </div>
+
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            background-color: #f4f4f9;
+        }
+
+        .info-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .info-box h2 {
+            font-size: 1.8rem;
+            color: #004080;
+            margin-bottom: 20px;
+        }
+
+        .info-content p {
+            font-size: 1.2rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .info-content p strong {
+            color: #004080;
+        }
+    </style>
 
     <footer>
       <div class="footer-images">

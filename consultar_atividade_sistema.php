@@ -50,82 +50,83 @@ while ($row = mysqli_fetch_assoc($columns_result)) {
 }
 
 // Verificar se existe coluna para colaborador
-$colaborador_field = in_array('id_colaborador', $columns) ? 'c.id_colaborador' : 
-                    (in_array('id_advogado', $columns) ? 'c.id_advogado' : NULL);
+$colaborador_field = in_array('id_colaborador', $columns) ? 'c.id_colaborador' : NULL;
 
 // Se não encontrar nenhuma coluna de colaborador, mostrar mensagem e link para corrigir
 if (!$colaborador_field) {
     $mensagem = "Erro: Não foi possível identificar a coluna de colaborador na tabela casos_juridicos. <a href='adicionar_colaborador.php' style='color: blue; text-decoration: underline;'>Clique aqui para corrigir</a>";
     $atividades = [];
 } else {
-    // Verificar se a coluna data_criacao existe
-    $data_criacao_existe = in_array('data_criacao', $columns);
-    $data_caso_field = $data_criacao_existe ? "c.data_criacao" : "NOW()";
+    // Continuar com a lógica normal
+    $data_caso_field = in_array('data_fechamento', $columns) ? "c.data_fechamento" : "NOW()";
 
     // Construir a consulta SQL com base nos filtros
-    $sql_atividades = "SELECT 
-                        'caso' AS tipo,
-                        c.id AS id_item,
-                        c.titulo AS titulo,
-                        c.descricao AS descricao,
-                        $data_caso_field AS data,
-                        u.nomeutilizador AS utilizador,
-                        cl.nome AS cliente
-                    FROM casos_juridicos c
-                    JOIN utilizador u ON $colaborador_field = u.id_utilizador
-                    JOIN cliente cl ON c.id_cliente = cl.id_cliente
-                    
-                    UNION ALL
-                    
-                    SELECT 
-                        'atividade' AS tipo,
-                        a.id AS id_item,
-                        a.titulo AS titulo,
-                        a.descricao AS descricao,
-                        a.data_atividade AS data,
-                        u.nomeutilizador AS utilizador,
-                        cl.nome AS cliente
-                    FROM atividades_caso a
-                    JOIN casos_juridicos c ON a.id_caso = c.id
-                    JOIN utilizador u ON $colaborador_field = u.id_utilizador
-                    JOIN cliente cl ON c.id_cliente = cl.id_cliente
-                    
-                    UNION ALL
-                    
-                    SELECT 
-                        'horas' AS tipo,
-                        h.id AS id_item,
-                        c.titulo AS titulo,
-                        h.descricao AS descricao,
-                        h.data_registro AS data,
-                        u.nomeutilizador AS utilizador,
-                        cl.nome AS cliente
-                    FROM horas_trabalhadas h
-                    JOIN casos_juridicos c ON h.id_caso = c.id
-                    JOIN utilizador u ON h.id_colaborador = u.id_utilizador
-                    JOIN cliente cl ON c.id_cliente = cl.id_cliente";
+    $sql_atividades = "
+    SELECT * FROM (
+        SELECT 
+            'caso' AS tipo,
+            c.id AS id_item,
+            c.titulo AS titulo,
+            c.descricao AS descricao,
+            $data_caso_field AS data,
+            u.nomeutilizador AS utilizador,
+            cl.nome AS cliente
+        FROM casos_juridicos c
+        JOIN utilizador u ON c.id_colaborador = u.id_utilizador
+        JOIN cliente cl ON c.id_cliente = cl.id_cliente
+        
+        UNION ALL
+        
+        SELECT 
+            'atividade' AS tipo,
+            a.id AS id_item,
+            a.titulo AS titulo,
+            a.descricao AS descricao,
+            a.data_atividade AS data,
+            u.nomeutilizador AS utilizador,
+            cl.nome AS cliente
+        FROM atividades_caso a
+        JOIN casos_juridicos c ON a.id_caso = c.id
+        JOIN utilizador u ON c.id_colaborador = u.id_utilizador
+        JOIN cliente cl ON c.id_cliente = cl.id_cliente
+        
+        UNION ALL
+        
+        SELECT 
+            'horas' AS tipo,
+            h.id AS id_item,
+            c.titulo AS titulo,
+            h.descricao AS descricao,
+            h.data_registro AS data,
+            u.nomeutilizador AS utilizador,
+            cl.nome AS cliente
+        FROM horas_trabalhadas h
+        JOIN casos_juridicos c ON h.id_caso = c.id
+        JOIN utilizador u ON h.id_colaborador = u.id_utilizador
+        JOIN cliente cl ON c.id_cliente = cl.id_cliente";
 
     // Adicionar a consulta de pagamentos apenas se a tabela existir
     if ($pagamentos_existe) {
-        $sql_atividades .= " 
-                    UNION ALL
-                    
-                    SELECT 
-                        'pagamento' AS tipo,
-                        p.id AS id_item,
-                        c.titulo AS titulo,
-                        p.descricao AS descricao,
-                        p.data_pagamento AS data,
-                        u.nomeutilizador AS utilizador,
-                        cl.nome AS cliente
-                    FROM pagamentos p
-                    JOIN casos_juridicos c ON p.id_caso = c.id
-                    JOIN utilizador u ON p.id_registrador = u.id_utilizador
-                    JOIN cliente cl ON c.id_cliente = cl.id_cliente";
+        $sql_atividades .= "
+        UNION ALL
+        
+        SELECT 
+            'pagamento' AS tipo,
+            p.id AS id_item,
+            c.titulo AS titulo,
+            p.descricao AS descricao,
+            p.data_pagamento AS data,
+            u.nomeutilizador AS utilizador,
+            cl.nome AS cliente
+        FROM pagamentos p
+        JOIN casos_juridicos c ON p.id_caso = c.id
+        JOIN utilizador u ON p.id_registrador = u.id_utilizador
+        JOIN cliente cl ON c.id_cliente = cl.id_cliente";
     }
 
-    // Adicionar a cláusula WHERE
-    $sql_atividades .= " WHERE 1=1";
+    $sql_atividades .= "
+    ) AS atividades
+    WHERE 1=1";
 
     // Adicionar filtros à consulta
     if ($filtro_tipo != 'todos') {
@@ -141,7 +142,7 @@ if (!$colaborador_field) {
     }
 
     if (!empty($filtro_colaborador)) {
-        $sql_atividades .= " AND u.id_utilizador = '$filtro_colaborador'";
+        $sql_atividades .= " AND utilizador = '$filtro_colaborador'";
     }
 
     $sql_atividades .= " ORDER BY data DESC LIMIT 200";

@@ -84,25 +84,24 @@ mysqli_close($conn);
     </header>
 
     <div class="login-container">
-      <form action="cria_utilizador.php" method="POST">
+      <form action="cria_utilizador.php" method="POST" class="form-box">
+          <h2>Criar Utilizador</h2>
           <div class="form-group">
-              <div class="input-icon">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
-              </div>
+              <label for="username"><i class="fa fa-user"></i> Nome de Utilizador</label>
+              <input type="text" id="username" name="username" placeholder="Insira o nome de utilizador" required>
           </div>
 
           <div class="form-group">
-              <i class="fa fa-envelope input-icon"></i>
+              <label for="mail"><i class="fa fa-envelope"></i> E-mail</label>
               <input type="email" id="mail" name="mail" placeholder="Insira o e-mail" required>
           </div>
 
           <div class="form-group">
-              <i class="fa fa-lock input-icon"></i>
+              <label for="password"><i class="fa fa-lock"></i> Password</label>
               <input type="password" id="password" name="password" placeholder="Insira a password" required>
           </div>
 
-          <button type="submit">Registar</button>
+          <button type="submit" class="btn-submit">Registar</button>
       </form>
     </div>
 
@@ -122,6 +121,79 @@ mysqli_close($conn);
       </div> 
       <p class="copyright">© 2025 Todos os direitos reservados.</p> 
     </footer>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            background-color: #f4f4f9;
+        }
+
+        .form-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .form-box h2 {
+            font-size: 1.8rem;
+            color: #004080;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 1rem;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            border-color: #004080;
+            outline: none;
+        }
+
+        .btn-submit {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #003366;
+        }
+    </style>
 
 </body>
 
