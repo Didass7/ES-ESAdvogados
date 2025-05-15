@@ -54,6 +54,14 @@
       <a href="procura_colaborador.php">
         <button class="menu-button2">CONSULTAR COLABORADORES</button>
       </a>
+      
+      <a href="consultar_atividade_sistema.php">
+        <button class="menu-button2">VISUALIZAR ATIVIDADE DO SISTEMA</button>
+      </a>
+      
+      <a href="consultar_saldo_geral.php">
+        <button class="menu-button2">CONSULTAR FATURAÇÃO GERAL</button>
+      </a>
     </div>
 
     <footer>
