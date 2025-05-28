@@ -102,26 +102,27 @@ mysqli_close($conn);
     </header>
 
     <div class="main-content">
-      <div class="login-container">
-          <form action="muda_password_admin.php" method="POST">
-              <div class="form-group">
-                  <i class="fa fa-lock input-icon"></i>
-                  <input type="password" id="current_password" name="current_password" placeholder="Senha Atual" required>
-              </div>
+        <div class="login-container">
+            <form action="muda_password_admin.php" method="POST" class="form-box">
+                <h2>Mudar Password</h2>
+                <div class="form-group">
+                    <i class="fa fa-lock input-icon"></i>
+                    <input type="password" id="current_password" name="current_password" placeholder="Senha Atual" required>
+                </div>
 
-              <div class="form-group">
-                  <i class="fa fa-lock input-icon"></i>
-                  <input type="password" id="new_password" name="new_password" placeholder="Nova Senha" required>
-              </div>
+                <div class="form-group">
+                    <i class="fa fa-lock input-icon"></i>
+                    <input type="password" id="new_password" name="new_password" placeholder="Nova Senha" required>
+                </div>
 
-              <div class="form-group">
-                  <i class="fa fa-lock input-icon"></i>
-                  <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Nova Senha" required>
-              </div>
+                <div class="form-group">
+                    <i class="fa fa-lock input-icon"></i>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Nova Senha" required>
+                </div>
 
-              <button type="submit">Alterar Senha</button>
-          </form>
-      </div>
+                <button type="submit" class="btn-submit">Alterar Senha</button>
+            </form>
+        </div>
     </div>
 
     <footer>
@@ -140,6 +141,80 @@ mysqli_close($conn);
       </div> 
       <p class="copyright">© 2025 Todos os direitos reservados.</p> 
     </footer>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #5271ff; /* Fundo azul */
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .form-box h2 {
+            font-size: 1.8rem;
+            color: #004080;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            border-color: #004080;
+            outline: none;
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #004080;
+        }
+
+        .btn-submit {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #003366;
+        }
+    </style>
 
 </body>
 

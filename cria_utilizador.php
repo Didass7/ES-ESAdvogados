@@ -125,7 +125,7 @@ mysqli_close($conn);
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #5271ff; /* Fundo azul */
             margin: 0;
             padding: 0;
         }
@@ -135,7 +135,6 @@ mysqli_close($conn);
             justify-content: center;
             align-items: center;
             min-height: 80vh;
-            background-color: #f4f4f9;
         }
 
         .form-box {
