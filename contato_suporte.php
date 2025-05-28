@@ -6,6 +6,16 @@ if (!isset($_SESSION['id_utilizador'])) {
     echo "<script>alert('Sessão expirada. Faça login novamente.'); window.location.href = 'login.php';</script>";
     exit;
 }
+
+$mostra_caixa = false;
+$nome = $email = $mensagem = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nome = htmlspecialchars($_POST['nome']);
+    $email = htmlspecialchars($_POST['email']);
+    $mensagem = htmlspecialchars($_POST['mensagem']);
+    $mostra_caixa = true;
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,6 +103,24 @@ if (!isset($_SESSION['id_utilizador'])) {
         .back-button .menu-button:hover {
             background-color: #003366;
         }
+
+        .info-box {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #004080;
+        }
+
+        .info-box h2 {
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            margin: 8px 0;
+        }
     </style>
 </head>
 
@@ -106,23 +134,31 @@ if (!isset($_SESSION['id_utilizador'])) {
         </div>
     </header>
 
-    <div class="contact-container">
-        <h1>Contacto</h1>
-        <p>Entre em contacto connosco preenchendo o formulário abaixo:</p>
-        <form action="envia_contato.php" method="POST">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Insira o seu nome" required>
+    <?php if ($mostra_caixa): ?>
+        <div class="info-box">
+            <h2>Contacto enviado com sucesso!</h2>
+            <p><strong>Nome:</strong> <?php echo $nome; ?></p>
+            <p><strong>Email:</strong> <?php echo $email; ?></p>
+            <p><strong>Mensagem:</strong> <?php echo nl2br($mensagem); ?></p>
+        </div>
+    <?php else: ?>
+        <div class="contact-container">
+            <h1>Contacto</h1>
+            <p>Entre em contacto connosco preenchendo o formulário abaixo:</p>
+            <form action="" method="POST">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Insira o seu nome" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Insira o seu email" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Insira o seu email" required>
 
-            <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva a sua mensagem" required></textarea>
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva a sua mensagem" required></textarea>
 
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    <?php endif; ?>
 
 </body>
-
 </html>

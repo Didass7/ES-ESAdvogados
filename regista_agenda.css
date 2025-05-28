@@ -219,6 +219,28 @@ footer {
   font-size: 0.9rem;
 }
 
+/* AGENDA VISUALIZACAO */
+.agenda-visualizacao {
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.agenda-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.agenda-table th, .agenda-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+.agenda-table th {
+    background: #5271ff;
+    color: #fff;
+}
+
 /* RESPONSIVO */
 @media (max-width: 1200px) {
   .grid-meses {

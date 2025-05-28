@@ -79,7 +79,7 @@ header {
     align-items: center;
     justify-content: center;
     flex-grow: 1;
-    width: 100%;
+    width: 40%;
     padding: 80px 20px; /* Evitar que o conteúdo fique sob header/footer */
     gap: 15px;
 }

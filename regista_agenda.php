@@ -71,44 +71,46 @@
 
   <main class="main-content">
     <div>
-      <h2>2025</h2>
-      <form method="POST" action="">
-        <div class="grid-meses">
-          <?php
-          $meses = [
-              "JANEIRO" => 31,
-              "FEVEREIRO" => 28,
-              "MARÇO" => 31,
-              "ABRIL" => 30,
-              "MAIO" => 31,
-              "JUNHO" => 30,
-              "JULHO" => 31,
-              "AGOSTO" => 31,
-              "SETEMBRO" => 30,
-              "OUTUBRO" => 31,
-              "NOVEMBRO" => 30,
-              "DEZEMBRO" => 31
-          ];
-          
-          foreach ($meses as $mes => $dias) {
-              echo '
-              <div class="mes-card" data-mes="'.$mes.'" data-max-dias="'.$dias.'">
-                <h3>'.$mes.'</h3>
-                <div class="campos-wrapper">
-                  <div class="campos">
-                    <input type="number" class="input-field" name="dia['.$mes.'][]" placeholder="DIA" min="1" max="'.$dias.'">
-                    <input type="text" class="input-field" name="acao['.$mes.'][]" placeholder="AÇÃO">
+        <h2>2025</h2>
+
+        <!-- FORMULÁRIO DE REGISTO DA AGENDA -->
+        <form method="POST" action="">
+          <div class="grid-meses">
+            <?php
+            $meses = [
+                "JANEIRO" => 31,
+                "FEVEREIRO" => 28,
+                "MARÇO" => 31,
+                "ABRIL" => 30,
+                "MAIO" => 31,
+                "JUNHO" => 30,
+                "JULHO" => 31,
+                "AGOSTO" => 31,
+                "SETEMBRO" => 30,
+                "OUTUBRO" => 31,
+                "NOVEMBRO" => 30,
+                "DEZEMBRO" => 31
+            ];
+            
+            foreach ($meses as $mes => $dias) {
+                echo '
+                <div class="mes-card" data-mes="'.$mes.'" data-max-dias="'.$dias.'">
+                  <h3>'.$mes.'</h3>
+                  <div class="campos-wrapper">
+                    <div class="campos">
+                      <input type="number" class="input-field" name="dia['.$mes.'][]" placeholder="DIA" min="1" max="'.$dias.'">
+                      <input type="text" class="input-field" name="acao['.$mes.'][]" placeholder="AÇÃO">
+                    </div>
                   </div>
-                </div>
-                <button type="button" class="add-button">ADICIONAR</button>
-              </div>';
-          }
-          ?>
-        </div>
-        <div class="submit-wrapper">
-          <button type="submit" class="submit-button">SUBMETER</button>
-        </div>
-      </form>
+                  <button type="button" class="add-button">ADICIONAR</button>
+                </div>';
+            }
+            ?>
+          </div>
+          <div class="submit-wrapper">
+            <button type="submit" class="submit-button">SUBMETER</button>
+          </div>
+        </form>
     </div>
   </main>
 
@@ -135,7 +137,7 @@
   </footer>
 
   <script>
-    document.querySelectorAll('.adicionar-btn').forEach(btn => {
+    document.querySelectorAll('.add-button').forEach(btn => {
       btn.addEventListener('click', () => {
         const mesCard = btn.closest('.mes-card');
         const camposWrapper = mesCard.querySelector('.campos-wrapper');

@@ -6,6 +6,16 @@ if (!isset($_SESSION['id_utilizador'])) {
     echo "<script>alert('Sessão expirada. Faça login novamente.'); window.location.href = 'login.php';</script>";
     exit;
 }
+
+$mostra_caixa = false;
+$assunto = $descricao = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $assunto = htmlspecialchars($_POST['assunto']);
+    $descricao = htmlspecialchars($_POST['descricao']);
+    $mostra_caixa = true;
+    // Aqui pode adicionar o código para guardar o ticket na base de dados, se necessário
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +34,24 @@ if (!isset($_SESSION['id_utilizador'])) {
             background-color: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #004080;
+        }
+
+        .info-box h2 {
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            margin: 8px 0;
         }
 
         .contact-container h1 {
@@ -73,26 +101,6 @@ if (!isset($_SESSION['id_utilizador'])) {
         .contact-container form button:hover {
             background-color: #003366;
         }
-
-        .back-button {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .back-button .menu-button {
-            background-color: #004080;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .back-button .menu-button:hover {
-            background-color: #003366;
-        }
     </style>
 </head>
 
@@ -106,20 +114,27 @@ if (!isset($_SESSION['id_utilizador'])) {
         </div>
     </header>
 
-    <div class="contact-container">
-        <h1>Abrir Pedido</h1>
-        <p>Preencha o formulário abaixo para abrir um pedido de suporte:</p>
-        <form action="envia_ticket.php" method="POST">
-            <label for="assunto">Assunto:</label>
-            <input type="text" id="assunto" name="assunto" placeholder="Insira o assunto do pedido" required>
+    <?php if ($mostra_caixa): ?>
+        <div class="info-box">
+            <h2>Pedido enviado com sucesso!</h2>
+            <p><strong>Assunto:</strong> <?php echo $assunto; ?></p>
+            <p><strong>Descrição:</strong> <?php echo nl2br($descricao); ?></p>
+        </div>
+    <?php else: ?>
+        <div class="contact-container">
+            <h1>Abrir Pedido</h1>
+            <p>Preencha o formulário abaixo para abrir um pedido de suporte:</p>
+            <form action="" method="POST">
+                <label for="assunto">Assunto:</label>
+                <input type="text" id="assunto" name="assunto" placeholder="Insira o assunto do pedido" required>
 
-            <label for="descricao">Descrição:</label>
-            <textarea id="descricao" name="descricao" rows="5" placeholder="Descreva o problema ou pedido" required></textarea>
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="5" placeholder="Descreva o problema ou pedido" required></textarea>
 
-            <button type="submit">Enviar Pedido</button>
-        </form>
-    </div>
+                <button type="submit">Enviar Pedido</button>
+            </form>
+        </div>
+    <?php endif; ?>
 
 </body>
-
 </html>

@@ -62,6 +62,10 @@ if (!isset($_SESSION['id_utilizador'])) {
         <button class="menu-button2">REGISTAR AGENDA</button>
       </a>
 
+      <a href="visualizar_agenda.php">
+        <button class="menu-button2">VISUALIZAR AGENDA</button>
+      </a>
+
       <a href="casos_juridicos.php">
         <button class="menu-button2">CASOS JURÍDICOS</button>
       </a>
