@@ -136,35 +136,107 @@ button:hover {
     background-color: #4056d6;
 }
 
+/* FOOTER */
 footer {
-    width: 100%;
-    text-align: center;
-    background-color: white;
-    padding: 10px 0;
-    color: #666;
-    font-size: 0.9rem;
-    margin-top: auto; /* Empurra o footer para o final da página */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra leve no topo do footer */
+  background-color: white;
+  padding: 10px 0 6px 0; /* Menos espaçamento */
+  box-shadow: 0 -2px 12px rgba(82, 113, 255, 0.08);
+  border-top: 2px solid #5271ff;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 5px;
+  position: relative;
+  min-height: 48px;
+}
+
+.footer-text {
+  color: #5271ff;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: left;
+  letter-spacing: 1px;
+  flex: 1;
+  margin-bottom: 0;
+  margin-left: 0;
 }
 
 .footer-images {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 10px 0;
-    flex-wrap: wrap; /* Permite que as imagens quebrem linha em telas pequenas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  padding: 0;
 }
 
 .footer-images img {
-    width: 40px;
-    height: 40px;
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 1px 2px rgba(82, 113, 255, 0.10));
+  transition: transform 0.2s;
+}
+.footer-images img:hover {
+  transform: scale(1.10);
+}
+
+.copyright-wrapper {
+  text-align: center;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .copyright {
-    font-size: 0.75rem; /* 12px em unidades relativas */
-    color: #5271ff;
-    margin-top: 5px;
-    font-weight: bold;
+  color: #5271ff;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    .login-button {
+        padding: 8px 30px;
+        font-size: 1.2rem;
+    }
+    
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .footer-images img {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 15px 10px;
+    }
+    
+    .login-button {
+        padding: 6px 20px;
+        font-size: 1rem;
+    }
+    
+    .footer-images {
+        gap: 10px;
+    }
 }
 
 /* Estilo para a tabela */
@@ -244,35 +316,3 @@ select {
     font-size: 0.9rem;
 }
 
-/* Media Queries para responsividade */
-@media (max-width: 768px) {
-    .login-button {
-        padding: 8px 30px;
-        font-size: 1.2rem;
-    }
-
-    .logo {
-        width: 50px;
-        height: 50px;
-    }
-
-    .footer-images img {
-        width: 35px;
-        height: 35px;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 15px 10px;
-    }
-
-    .login-button {
-        padding: 6px 20px;
-        font-size: 1rem;
-    }
-
-    .footer-images {
-        gap: 10px;
-    }
-}

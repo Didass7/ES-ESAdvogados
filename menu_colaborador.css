@@ -95,6 +95,7 @@ header {
     font-weight: bold;
     white-space: nowrap; /* Impede que o texto quebre */
 }
+
 /* FOOTER */
 footer {
   background-color: white;

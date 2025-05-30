@@ -65,41 +65,55 @@
 
     <main>
         <h1>Criar Caso Jurídico</h1>
-        <form action="criar_caso.php" method="POST">
-            <label for="titulo">Título do Caso:</label>
-            <input type="text" id="titulo" name="titulo" placeholder="Digite o título do caso" required>
+        <form action="criar_caso.php" method="POST" style="width:100%; max-width:420px; margin:0 auto; background:#fff; border-radius:18px; box-shadow:0 4px 24px rgba(82,113,255,0.10); padding:32px 24px 24px 24px; display:flex; flex-direction:column; gap:18px;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <label for="titulo" style="font-weight:bold; color:#5271ff;">Título do Caso:</label>
+                <input type="text" id="titulo" name="titulo" placeholder="Digite o título do caso" required
+                    style="padding:10px 12px; border:1.5px solid #5271ff; border-radius:10px; font-size:1rem; background:#f7f9ff; color:#222;">
+            </div>
 
-            <label for="descricao">Descrição do Caso:</label>
-            <textarea id="descricao" name="descricao" placeholder="Digite a descrição do caso" required></textarea>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <label for="descricao" style="font-weight:bold; color:#5271ff;">Descrição do Caso:</label>
+                <textarea id="descricao" name="descricao" placeholder="Digite a descrição do caso" required
+                    style="padding:10px 12px; border:1.5px solid #5271ff; border-radius:10px; font-size:1rem; background:#f7f9ff; color:#222; min-height:80px;"></textarea>
+            </div>
 
-            <label for="id_cliente">Selecionar Cliente:</label>
-            <select id="id_cliente" name="id_cliente" required>
-                <option value="">Selecione um cliente</option>
-                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?= $row['id_cliente'] ?>"><?= $row['nome'] ?></option>
-                <?php endwhile; ?>
-            </select>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <label for="id_cliente" style="font-weight:bold; color:#5271ff;">Selecionar Cliente:</label>
+                <select id="id_cliente" name="id_cliente" required
+                    style="padding:10px 12px; border:1.5px solid #5271ff; border-radius:10px; font-size:1rem; background:#f7f9ff; color:#222;">
+                    <option value="">Selecione um cliente</option>
+                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                        <option value="<?= $row['id_cliente'] ?>"><?= $row['nome'] ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
 
-            <button type="submit">Criar Caso</button>
+            <button type="submit" style="background-color:#5271ff; color:#fff; border:none; border-radius:20px; padding:12px 0; font-size:1.1rem; font-weight:bold; cursor:pointer; margin-top:10px; transition:background 0.2s;">
+                Criar Caso
+            </button>
         </form>
     </main>
 
-    <footer>
-      <div class="footer-images">
-        <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
-          <img src="location.png" alt="Imagem Localização">
+<footer>
+  <div class="footer-content">
+    <div class="footer-text">CRIAR CASO</div>
+    <div class="footer-images">
+      <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
+          <img src="location.png" alt="Imagem Localização"/>
         </a>
-
         <a href="https://moodle2425.ipcb.pt/" target="_blank">
-          <img src="phone.png" alt="Imagem Telefone">
+          <img src="phone.png" alt="Imagem Telefone"/>
         </a>
-
         <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" target="_blank">
-          <img src="mail.png" alt="Imagem Mail">
-        </a>  
-      </div> 
-      <p class="copyright">© 2025 Todos os direitos reservados.</p> 
-    </footer>
+          <img src="mail.png" alt="Imagem Email"/>
+        </a>
+    </div>
+  </div>
+  <div class="copyright-wrapper">
+    <span class="copyright">© 2025 Todos os direitos reservados.</span>
+  </div>
+</footer>
 
 </body>
 

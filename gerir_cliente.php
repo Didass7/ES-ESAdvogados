@@ -66,22 +66,25 @@ if (!isset($_SESSION['id_utilizador'])) {
       
     </div>
 
-    <footer>
-      <div class="footer-images">
-        <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
-          <img src="location.png" alt="Imagem Localização">
+<footer>
+  <div class="footer-content">
+    <div class="footer-text">GERIR CLIENTE</div>
+    <div class="footer-images">
+      <a href="https://maps.app.goo.gl/UQYLoEsTwdgCKoft9" target="_blank">
+          <img src="location.png" alt="Imagem Localização"/>
         </a>
-
         <a href="https://moodle2425.ipcb.pt/" target="_blank">
-          <img src="phone.png" alt="Imagem Telefone">
+          <img src="phone.png" alt="Imagem Telefone"/>
         </a>
-
         <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox" target="_blank">
-          <img src="mail.png" alt="Imagem Mail">
-        </a>  
-      </div> 
-      <p class="copyright">© 2025 Todos os direitos reservados.</p> 
-    </footer>
+          <img src="mail.png" alt="Imagem Email"/>
+        </a>
+    </div>
+  </div>
+  <div class="copyright-wrapper">
+    <span class="copyright">© 2025 Todos os direitos reservados.</span>
+  </div>
+</footer>
 </body>
 
 </html>
