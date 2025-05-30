@@ -19,6 +19,35 @@ if (!isset($_SESSION['id_utilizador'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+            margin: 0; /* Reset default body margins */
+        }
+
+        header {
+            position: static; /* Ensure the header is part of the normal document flow */
+            top: 0;
+            width: 100%;
+            z-index: 100; /* Ensure it's above other content */
+        }
+
+        .main-content {
+            flex: 1; /* Allow the main content to grow and take up remaining space */
+            padding-bottom: 60px; /* Add some padding to the bottom to prevent content from overlapping the footer */
+        }
+
+        footer {
+            position: relative; /* Ensure the footer is positioned at the end of the content */
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa; /* Optional: Add a background color for better visibility */
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -72,6 +101,10 @@ if (!isset($_SESSION['id_utilizador'])) {
 
       <a href="horas_trabalhadas.php">
         <button class="menu-button2">REGISTAR HORAS TRABALHADAS</button>
+      </a>
+
+      <a href="colaborador_saldo.php">
+        <button class="menu-button2">VER SALDO/EDITAR SALDO</button>
       </a>
 
       <a href="area_suporte.php">

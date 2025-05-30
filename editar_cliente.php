@@ -39,8 +39,9 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         exit;
     }
 } else {
-    // Se não foi fornecido um ID, buscar todos os clientes para o dropdown
-    $sql_clientes = "SELECT id_cliente, nome, nif FROM cliente ORDER BY nome";
+    // Se não foi fornecido um ID, buscar todos os clientes PARA O COLABORADOR para o dropdown
+    $id_colaborador = $_SESSION['id_utilizador'];
+    $sql_clientes = "SELECT id_cliente, nome, nif FROM cliente WHERE id_colaborador = $id_colaborador ORDER BY nome";
     $result_clientes = mysqli_query($conn, $sql_clientes);
     
     if ($result_clientes && mysqli_num_rows($result_clientes) > 0) {
@@ -286,7 +287,7 @@ mysqli_close($conn);
               COLABORADOR
               <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
-            <a href="menu_colaborador.php">
+            <a href="gerir_cliente.php">
               <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
             </a>
         </div>

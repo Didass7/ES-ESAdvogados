@@ -11,28 +11,29 @@ body {
     background-color: #5271ff;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Garante que o body ocupe toda a altura da janela */
+    align-items: center;
+    min-height: 100vh;
     margin: 0;
     font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden; /* Só esconder overflow horizontal */
-    position: relative; /* Para posicionamento absoluto dos filhos */
+    overflow-x: hidden;
+    position: relative;
 }
 
 /* Estilo do Header */
 header {
-    position: fixed; /* Fixo no topo */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     padding: 20px;
     display: flex;
-    justify-content: space-between; /* Alinhar logo e botões */
+    justify-content: space-between;
     align-items: center;
     background: transparent;
-    z-index: 1000; /* Garantir que fique acima de outros elementos */
+    z-index: 1000;
 }
 
-/* Container do Header - pode não ser necessário se o header já é flex */
+/* Container do Header */
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -43,11 +44,11 @@ header {
 
 .header-container2 {
     display: flex;
-    justify-content: flex-end;
+    justify-content: right;
     align-items: center;
     width: 100%;
     padding: 0px;
-    gap: 7.5px;
+    gap: 10px;
 }
 
 /* Estilo do Logotipo */
@@ -64,21 +65,21 @@ header {
     border: none;
     border-radius: 50px;
     padding: 10px 15px;
-    font-size: 1.25rem; /* Usar unidades relativas (melhor para responsividade) */
+    font-size: 1.25rem;
     cursor: pointer;
     font-weight: bold;
-    white-space: nowrap; /* Impede que o texto quebre */
+    white-space: nowrap;
 }
 
-/* Conteúdo principal - adicionei uma classe para o conteúdo central */
+/* Conteúdo principal */
 .main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-grow: 1;
-    width: 100%;
-    padding: 80px 20px; /* Evitar que o conteúdo fique sob header/footer */
+    width: 40%;
+    padding: 80px 20px;
     gap: 15px;
 }
 
@@ -88,76 +89,26 @@ header {
     border: none;
     border-radius: 50px;
     padding: 10px 30px;
-    font-size: 2.5rem; /* Usar unidades relativas (melhor para responsividade) */
+    font-size: 2.5rem;
     cursor: pointer;
     font-weight: bold;
-    white-space: nowrap; /* Impede que o texto quebre */
+    white-space: nowrap;
+    transition: none; /* Remove transition */
 }
 
-/* Estilo para a página Criar Caso Jurídico */
-main {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
-    margin: 80px auto 100px auto; /* Adiciona margem inferior para o footer */
-    flex: 1 0 auto; /* Permite que o conteúdo cresça, mas não encolha */
-}
-
-h1 {
-    text-align: center;
+/* Remove hover effect */
+.menu-button2:hover {
+    background-color: white;
     color: #5271ff;
-    margin-bottom: 20px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-label {
-    font-weight: bold;
-    color: #333;
-}
-
-input, textarea, select, button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-textarea {
-    resize: vertical; /* Permite redimensionar apenas verticalmente */
-}
-
-button {
-    background-color: #5271ff;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
-}
-
-button:hover {
-    background-color: #4056d6;
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
     width: 100%;
     text-align: center;
     background-color: white;
     padding: 10px 0;
-    color: #666;
-    font-size: 0.9rem;
-    margin-top: auto; /* Empurra o footer para o final da página */
-    position: relative; /* Não fixo */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0; /* Impede que o footer encolha */
 }
 
 .footer-images {
@@ -165,7 +116,6 @@ footer {
     justify-content: center;
     gap: 15px;
     padding: 10px 0;
-    flex-wrap: wrap; /* Permite que as imagens quebrem linha em telas pequenas */
 }
 
 .footer-images img {
@@ -174,7 +124,7 @@ footer {
 }
 
 .copyright {
-    font-size: 0.75rem; /* 12px em unidades relativas */
+    font-size: 0.75rem;
     color: #5271ff;
     margin-top: 5px;
     font-weight: bold;

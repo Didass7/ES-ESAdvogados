@@ -137,7 +137,7 @@ if ($modo_visualizacao == "lista") {
                 COLABORADOR
                 <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
-            <a href="menu_colaborador.php">
+            <a href="gerir_cliente.php">
                 <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
             </a>
         </div>

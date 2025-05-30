@@ -87,6 +87,26 @@ if (!table_exists($conn, 'pagamentos')) {
 } else {
     echo "<h3 style='color:green'>A tabela 'pagamentos' já existe.</h3>";
 }
+
+// Verificar e corrigir a tabela cliente
+if (table_exists($conn, 'cliente')) {
+    echo "<h3>Verificando tabela cliente...</h3>";
+
+    // Verificar coluna saldo
+    if (!column_exists($conn, 'cliente', 'saldo')) {
+        echo "<p>Adicionando coluna 'saldo'...</p>";
+        $query = "ALTER TABLE cliente ADD COLUMN saldo DECIMAL(10,2) DEFAULT 0.00";
+        if (mysqli_query($conn, $query)) {
+            echo "<p style='color:green'>Coluna 'saldo' adicionada com sucesso!</p>";
+        } else {
+            echo "<p style='color:red'>Erro ao adicionar coluna: " . mysqli_error($conn) . "</p>";
+        }
+    } else {
+        echo "<p style='color:green'>A coluna 'saldo' já existe.</p>";
+    }
+} else {
+    echo "<p style='color:red'>A tabela 'cliente' não existe!</p>";
+}
 ?>
 
 <!DOCTYPE html>

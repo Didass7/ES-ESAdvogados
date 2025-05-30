@@ -41,23 +41,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titulo = $_POST['titulo'];
     $descricao = $_POST['descricao'];
     $data_atividade = $_POST['data_atividade'];
-    $custo = isset($_POST['custo']) ? floatval($_POST['custo']) : null;
+    $custo = isset($_POST['custo']) ? floatval($_POST['custo']) : 0; // Ensure custo is a number, default to 0
 
-    // Verificar se a coluna custo existe na tabela
-    $check_column_query = "SHOW COLUMNS FROM atividades_caso LIKE 'custo'";
-    $column_result = mysqli_query($conn, $check_column_query);
-
-    // Usar consulta com ou sem coluna custo dependendo se ela existe
-    $query = mysqli_num_rows($column_result) > 0
-        ? "INSERT INTO atividades_caso (id_caso, titulo, descricao, data_atividade, custo)
-           VALUES ('$id_caso', '$titulo', '$descricao', '$data_atividade', " . ($custo !== null ? $custo : "NULL") . ")"
-        : "INSERT INTO atividades_caso (id_caso, titulo, descricao, data_atividade)
-           VALUES ('$id_caso', '$titulo', '$descricao', '$data_atividade')";
-
-    if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Atividade registrada com sucesso!'); window.location.href='registar_atividade.php';</script>";
+    // Validate date on the server-side
+    $hoje = date("Y-m-d");
+    if ($data_atividade < $hoje) {
+        echo "<script>alert('A data da atividade deve ser igual ou posterior à data atual.');</script>";
     } else {
-        echo "<script>alert('Erro ao registrar atividade: " . mysqli_error($conn) . "');</script>";
+        // Get the client ID associated with the case
+        $sql_cliente = "SELECT id_cliente FROM casos_juridicos WHERE id = '$id_caso'";
+        $result_cliente = mysqli_query($conn, $sql_cliente);
+
+        if ($result_cliente && mysqli_num_rows($result_cliente) > 0) {
+            $row_cliente = mysqli_fetch_assoc($result_cliente);
+            $id_cliente = $row_cliente['id_cliente'];
+
+            // Get the client's current balance
+            $sql_saldo = "SELECT saldo FROM cliente WHERE id_cliente = '$id_cliente'";
+            $result_saldo = mysqli_query($conn, $sql_saldo);
+
+            if ($result_saldo && mysqli_num_rows($result_saldo) > 0) {
+                $row_saldo = mysqli_fetch_assoc($result_saldo);
+                $saldo = floatval($row_saldo['saldo']);
+
+                // Check if the client has sufficient funds
+                if ($saldo >= $custo) {
+                    // Deduct the cost from the client's balance
+                    $novo_saldo = $saldo - $custo;
+                    $sql_update = "UPDATE cliente SET saldo = '$novo_saldo' WHERE id_cliente = '$id_cliente'";
+
+                    if (mysqli_query($conn, $sql_update)) {
+                        // Insert the activity into the database
+                        $insert_query = "INSERT INTO atividades_caso (id_caso, titulo, descricao, data_atividade, custo)
+                                         VALUES ('$id_caso', '$titulo', '$descricao', '$data_atividade', '$custo')";
+
+                        if (mysqli_query($conn, $insert_query)) {
+                            echo "<script>alert('Atividade registrada com sucesso e saldo do cliente atualizado!'); window.location.href='registar_atividade.php';</script>";
+                        } else {
+                            echo "<script>alert('Erro ao registrar atividade: " . mysqli_error($conn) . "');</script>";
+                        }
+                    } else {
+                        echo "<script>alert('Erro ao atualizar o saldo do cliente: " . mysqli_error($conn) . "');</script>";
+                    }
+                } else {
+                    echo "<script>alert('O cliente não tem saldo suficiente para esta atividade. Por favor, adicione saldo à conta do cliente.'); window.location.href='colaborador_saldo.php';</script>";
+                }
+            } else {
+                echo "<script>alert('Erro ao obter o saldo do cliente.');</script>";
+            }
+        } else {
+            echo "<script>alert('Erro ao obter o ID do cliente associado ao caso.');</script>";
+        }
     }
 }
 ?>
@@ -72,6 +106,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="criar_atividade.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var dataAtividadeInput = document.getElementById('data_atividade');
+            var hoje = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+            dataAtividadeInput.setAttribute('min', hoje); // Set the min attribute to today's date
+        });
+    </script>
 </head>
 
 <body>

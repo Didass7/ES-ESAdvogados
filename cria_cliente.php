@@ -31,15 +31,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $morada = isset($_POST['morada']) ? $_POST['morada'] : '';
     $endereco_faturacao = isset($_POST['endereco_faturacao']) ? $_POST['endereco_faturacao'] : '';
     $pagamento = isset($_POST['pagamento']) ? $_POST['pagamento'] : '';
-    
+    $saldo = isset($_POST['saldo']) && is_numeric($_POST['saldo']) ? $_POST['saldo'] : 0.00; // Get saldo from the form
+
     // Verificar se os campos obrigatórios estão preenchidos
     if (empty($nome) || empty($dataNasc) || empty($nif) || empty($contacto1) || 
         empty($morada) || empty($endereco_faturacao) || empty($pagamento)) {
         echo "<script>alert('Por favor, preencha todos os campos obrigatórios.');</script>";
     } else {
         // Inserir na base de dados
-        $sql = "INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador) 
-                VALUES ('$nome', '$dataNasc', '$nif', '$contacto1', '$contacto2', '$morada', '$endereco_faturacao', '$pagamento', $id_colaborador)";
+        $sql = "INSERT INTO cliente (nome, dataNasci, nif, contacto1, contacto2, morada, endereco_faturacao, pagamento, id_colaborador, saldo) 
+                VALUES ('$nome', '$dataNasc', '$nif', '$contacto1', '$contacto2', '$morada', '$endereco_faturacao', '$pagamento', $id_colaborador, $saldo)";
         
         if (mysqli_query($conn, $sql)) {
             echo "<script>alert('Cliente registado com sucesso!'); window.location.href = 'menu_colaborador.php';</script>";
@@ -137,6 +138,11 @@ $conn->close();
           <option value="3">MBWay</option>
           <option value="4">Dinheiro</option>
         </select>
+      </div>
+
+      <div>
+        <label style="font-weight: bold; color: #5271ff;">SALDO INICIAL</label><br>
+        <input type="number" name="saldo" step="0.01" placeholder="INSERIR SALDO INICIAL" value="0.00">
       </div>
       
       <div style="grid-column: span 2; text-align: center; margin-top: 20px;">

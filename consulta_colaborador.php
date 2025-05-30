@@ -51,7 +51,7 @@ if (isset($_GET['nome']) && isset($_GET['mail'])) {
               <img src="person.png" alt="Ícone" style="width: 30px; height: 30px; vertical-align: middle;">
             </button>
 
-            <a href="menu_admin.php">
+            <a href="procura_colaborador.php">
               <img src="seta.png" alt="Ícone" style="width: 60px; height: 60px; vertical-align: middle;">
             </a>
         </div>

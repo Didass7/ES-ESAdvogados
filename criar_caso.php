@@ -2,8 +2,10 @@
     
     include 'basedados.h';
 
-    // Obter a lista de clientes
-    $query = "SELECT id_cliente, nome FROM cliente";
+    // Obter a lista de clientes associados ao colaborador logado
+    session_start();
+    $id_colaborador = $_SESSION['id_utilizador'];
+    $query = "SELECT id_cliente, nome FROM cliente WHERE id_colaborador = $id_colaborador";
     $result = mysqli_query($conn, $query);
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
